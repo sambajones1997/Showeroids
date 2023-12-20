@@ -249,7 +249,7 @@ MonoBehaviour:
   mSpriteSpeed: 2
   mMoveTimer: 2
   mMoveDirection: {x: 0, y: -1, z: 0}
-  mMoveBehaviour: 0
+  mMoveBehaviour: 2
 --- !u!212 &1786283720
 SpriteRenderer:
   m_ObjectHideFlags: 0
