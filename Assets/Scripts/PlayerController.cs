@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float deccelerationMultiplier = 2.0f;
     [SerializeField] float speedSnap = 0.5f;
 
+    private void Start()
+    {
+    }
     // Update is called once per frame
     void Update()
     {
