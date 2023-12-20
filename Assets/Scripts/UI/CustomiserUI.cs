@@ -5,56 +5,84 @@ using UnityEngine.UI;
 
 public class CustomiserUI : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer mShipSpriteRenderer;
+    [Header("Ship Renderer")]
+    [SerializeField] SpriteRenderer mShipBodySpriteRenderer;
+    [SerializeField] SpriteRenderer mShipTrim1SpriteRenderer;
+    [SerializeField] SpriteRenderer mShipTrim2SpriteRenderer;
+    [Header("Colour Choosers")]
     [SerializeField] Image mColourSpriteRenderer;
+    [SerializeField] Image mTrim1SpriteRenderer;
+    [SerializeField] Image mTrim2SpriteRenderer;
+    [Header("Sprites")]
     [SerializeField] List<Sprite> mShips = new List<Sprite>();
-    [SerializeField] List<Color> mColors = new List<Color>();
+    [SerializeField] List<Sprite> mShipTrims1 = new List<Sprite>();
+    [SerializeField] List<Sprite> mShipTrims2 = new List<Sprite>();
+    [Header("Colours")]
+    [SerializeField] List<Color> mColours = new List<Color>();
 
-    int mColorIndex = 0;
+    int mColourIndex = 0;
+    int mTrim1ColourIndex = 0;
+    int mTrim2ColourIndex = 0;
     int mShipIndex = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OnNextColourPressed(bool increment = true)
     {
         if (increment)
         {
-            mColorIndex++;
+            mColourIndex++;
         }
         else
         {
-            mColorIndex--;
+            mColourIndex--;
         }
 
-        if (mColorIndex >= mColors.Count)
+        if (mColourIndex >= mColours.Count)
         {
-            mColorIndex = 0;
+            mColourIndex = 0;
         }
-        else if (mColorIndex < 0)
+        else if (mColourIndex < 0)
         {
-            mColorIndex = mColors.Count - 1;
+            mColourIndex = mColours.Count - 1;
         }
 
-        if (mColors.Count > mColorIndex)
+        UpdateShipSpriteAndColours();
+        UpdateCustomiserColours();
+    }
+
+    public void OnNextTrim1ColourPressed(bool increment = true)
+    {
+        ChangeTrim(ref mTrim1ColourIndex, increment);
+
+        UpdateShipSpriteAndColours();
+        UpdateCustomiserColours();
+    }
+
+    public void OnNextTrim2ColourPressed(bool increment = true)
+    {
+        ChangeTrim(ref mTrim2ColourIndex, increment);
+
+        UpdateShipSpriteAndColours();
+        UpdateCustomiserColours();
+    }
+
+    private void ChangeTrim(ref  int trimIndex, bool increment = true)
+    {
+        if (increment)
         {
-            if (mShipSpriteRenderer)
-            {
-                mShipSpriteRenderer.color = mColors[mColorIndex];
-            }
-  
-            if (mColourSpriteRenderer)
-            {
-                mColourSpriteRenderer.color = mColors[mColorIndex];
-            }
+            trimIndex++;
+        }
+        else
+        {
+            trimIndex--;
+        }
+
+        if (trimIndex >= mColours.Count)
+        {
+            trimIndex = 0;
+        }
+        else if (trimIndex < 0)
+        {
+            trimIndex = mColours.Count - 1;
         }
     }
 
@@ -78,10 +106,54 @@ public class CustomiserUI : MonoBehaviour
             mShipIndex = mShips.Count - 1;
         }
 
-        if (mShipSpriteRenderer && mShips.Count > mShipIndex && mColors.Count > mColorIndex)
+        UpdateShipSpriteAndColours();
+    }
+
+    private void UpdateShipSpriteAndColours()
+    {
+        if (mShipBodySpriteRenderer && mShips.Count > mShipIndex && mColours.Count > mColourIndex)
         {
-            mShipSpriteRenderer.sprite = mShips[mShipIndex];
-            mShipSpriteRenderer.color = mColors[mColorIndex];
+            mShipBodySpriteRenderer.sprite = mShips[mShipIndex];
+            mShipBodySpriteRenderer.color = mColours[mColourIndex];
+        }
+
+        if (mShipTrim1SpriteRenderer && mShipTrims1.Count > mShipIndex && mColours.Count > mColourIndex)
+        {
+            mShipTrim1SpriteRenderer.sprite = mShipTrims1[mShipIndex];
+            mShipTrim1SpriteRenderer.color = mColours[mShipIndex];
+        }
+
+        if (mShipTrim2SpriteRenderer && mShipTrims2.Count > mShipIndex && mColours.Count > mColourIndex)
+        {
+            mShipTrim2SpriteRenderer.sprite = mShipTrims2[mShipIndex];
+            mShipTrim2SpriteRenderer.color = mColours[mShipIndex];
+        }
+    }
+
+    private void UpdateCustomiserColours()
+    {
+        if (mColours.Count > mColourIndex)
+        {
+            if (mColourSpriteRenderer)
+            {
+                mColourSpriteRenderer.color = mColours[mColourIndex];
+            }
+        }
+
+        if (mColours.Count > mTrim1ColourIndex)
+        {
+            if (mTrim1SpriteRenderer)
+            {
+                mTrim1SpriteRenderer.color = mColours[mTrim1ColourIndex];
+            }
+        }
+
+        if (mColours.Count > mTrim2ColourIndex)
+        {
+            if (mTrim2SpriteRenderer)
+            {
+                mTrim2SpriteRenderer.color = mColours[mTrim2ColourIndex];
+            }
         }
     }
 }
