@@ -114,7 +114,10 @@ public class CustomiserUI : MonoBehaviour
         if (mShipBodySpriteRenderer && mShips.Count > mShipIndex && mColours.Count > mColourIndex)
         {
             mShipBodySpriteRenderer.sprite = mShips[mShipIndex];
-            mShipBodySpriteRenderer.color = mColours[mColourIndex];
+
+            mShipBodySpriteRenderer.material.SetColor("_ShipCol", mColours[mColourIndex]);
+            mShipBodySpriteRenderer.material.SetColor("_Trim1Col", mColours[mTrim1ColourIndex]);
+            mShipBodySpriteRenderer.material.SetColor("_Trim2Col", mColours[mTrim2ColourIndex]);
         }
 
         if (mShipTrim1SpriteRenderer && mShipTrims1.Count > mShipIndex && mColours.Count > mColourIndex)
