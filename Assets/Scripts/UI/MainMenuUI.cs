@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
+    [SerializeField] GameObject mSettingsCanvas;
+    [SerializeField] GameObject mMainMenuCanvas;
     AsyncOperation LoadSceneOperation;
 
     public void Start()
@@ -39,6 +41,12 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnSettingsPressed()
     {
+        mSettingsCanvas.SetActive(true);
+        mMainMenuCanvas.SetActive(false);
+    }
 
+    public void ShowCanvas(bool showCanvas)
+    {
+        mMainMenuCanvas.SetActive(true);
     }
 }
