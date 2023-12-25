@@ -6,24 +6,28 @@ using UnityEngine.UI;
 public class CustomiserUI : MonoBehaviour
 {
     [Header("Ship Renderer")]
-    [SerializeField] SpriteRenderer mShipBodySpriteRenderer;
-    [SerializeField] SpriteRenderer mShipTrim1SpriteRenderer;
-    [SerializeField] SpriteRenderer mShipTrim2SpriteRenderer;
+    [SerializeField] List<PlayerShip> mShipList = new List<PlayerShip>();
+    SpriteRenderer mShipBodySpriteRenderer;
+    SpriteRenderer mShipTrim1SpriteRenderer;
+    SpriteRenderer mShipTrim2SpriteRenderer;
     [Header("Colour Choosers")]
     [SerializeField] Image mColourSpriteRenderer;
     [SerializeField] Image mTrim1SpriteRenderer;
     [SerializeField] Image mTrim2SpriteRenderer;
-    [Header("Sprites")]
-    [SerializeField] List<Sprite> mShips = new List<Sprite>();
-    [SerializeField] List<Sprite> mShipTrims1 = new List<Sprite>();
-    [SerializeField] List<Sprite> mShipTrims2 = new List<Sprite>();
     [Header("Colours")]
     [SerializeField] List<Color> mColours = new List<Color>();
+    [SerializeField] string mTintColourName = "_TintColour";
 
     int mColourIndex = 0;
     int mTrim1ColourIndex = 0;
     int mTrim2ColourIndex = 0;
     int mShipIndex = 0;
+
+    private void Start()
+    {
+        DisplayShip();
+        UpdateCustomiserColours();
+    }
 
     public void OnNextColourPressed(bool increment = true)
     {
@@ -88,6 +92,7 @@ public class CustomiserUI : MonoBehaviour
 
     public void OnNextShipPressed(bool increment = true)
     {
+        mShipList[mShipIndex].gameObject.SetActive(false);
         if (increment)
         {
             mShipIndex++;
@@ -97,39 +102,37 @@ public class CustomiserUI : MonoBehaviour
             mShipIndex--;
         }
 
-        if (mShipIndex >= mShips.Count)
+        if (mShipIndex >= mShipList.Count)
         {
             mShipIndex = 0;
         }
         else if (mShipIndex < 0)
         {
-            mShipIndex = mShips.Count - 1;
+            mShipIndex = mShipList.Count - 1;
         }
 
+        mColours.RemoveAt(0);
+
+        DisplayShip();
         UpdateShipSpriteAndColours();
     }
 
     private void UpdateShipSpriteAndColours()
     {
-        if (mShipBodySpriteRenderer && mShips.Count > mShipIndex && mColours.Count > mColourIndex)
+        if (mShipBodySpriteRenderer && mShipList.Count > mShipIndex && mColours.Count > mColourIndex)
         {
-            mShipBodySpriteRenderer.sprite = mShips[mShipIndex];
-
-            mShipBodySpriteRenderer.material.SetColor("_ShipCol", mColours[mColourIndex]);
-            mShipBodySpriteRenderer.material.SetColor("_Trim1Col", mColours[mTrim1ColourIndex]);
-            mShipBodySpriteRenderer.material.SetColor("_Trim2Col", mColours[mTrim2ColourIndex]);
+            mShipList[mShipIndex].gameObject.SetActive(true);
+            mShipBodySpriteRenderer.material.SetColor(mTintColourName, mColours[mColourIndex]);
         }
 
-        if (mShipTrim1SpriteRenderer && mShipTrims1.Count > mShipIndex && mColours.Count > mColourIndex)
+        if (mShipTrim1SpriteRenderer && mShipList.Count > mShipIndex && mColours.Count > mColourIndex)
         {
-            mShipTrim1SpriteRenderer.sprite = mShipTrims1[mShipIndex];
-            mShipTrim1SpriteRenderer.color = mColours[mShipIndex];
+            mShipTrim1SpriteRenderer.material.SetColor(mTintColourName, mColours[mTrim1ColourIndex]);
         }
 
-        if (mShipTrim2SpriteRenderer && mShipTrims2.Count > mShipIndex && mColours.Count > mColourIndex)
+        if (mShipTrim2SpriteRenderer && mShipList.Count > mShipIndex && mColours.Count > mColourIndex)
         {
-            mShipTrim2SpriteRenderer.sprite = mShipTrims2[mShipIndex];
-            mShipTrim2SpriteRenderer.color = mColours[mShipIndex];
+            mShipTrim2SpriteRenderer.material.SetColor(mTintColourName, mColours[mTrim2ColourIndex]);
         }
     }
 
@@ -156,6 +159,23 @@ public class CustomiserUI : MonoBehaviour
             if (mTrim2SpriteRenderer)
             {
                 mTrim2SpriteRenderer.color = mColours[mTrim2ColourIndex];
+            }
+        }
+    }
+
+    private void DisplayShip()
+    {
+        if (mShipList.Count > mShipIndex && mShipIndex >= 0)
+        {
+            mShipList[mShipIndex].gameObject.SetActive(true);
+            mShipBodySpriteRenderer = mShipList[mShipIndex].GetShipBodySprite();
+            mShipTrim1SpriteRenderer = mShipList[mShipIndex].GetShipTrim1Sprite();
+            mShipTrim2SpriteRenderer = mShipList[mShipIndex].GetShipTrim2Sprite();
+
+            if (mShipBodySpriteRenderer)
+            {
+                Color startingColour = mShipBodySpriteRenderer.material.GetColor(mTintColourName);
+                mColours.Insert(0, startingColour);
             }
         }
     }
