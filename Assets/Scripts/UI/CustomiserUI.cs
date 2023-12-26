@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CustomiserUI : MonoBehaviour
@@ -14,10 +15,14 @@ public class CustomiserUI : MonoBehaviour
     [SerializeField] Image mColourSpriteRenderer;
     [SerializeField] Image mTrim1SpriteRenderer;
     [SerializeField] Image mTrim2SpriteRenderer;
+    [SerializeField] GameObject mColourLineObject;
+    [SerializeField] GameObject mTrim1ColourLineObject;
+    [SerializeField] GameObject mTrim2ColourLineObject;
     [Header("Colours")]
     [SerializeField] List<Color> mColours = new List<Color>();
     [SerializeField] string mTintColourName = "_TintColour";
 
+    AsyncOperation LoadSceneOperation;
     int mColourIndex = 0;
     int mTrim1ColourIndex = 0;
     int mTrim2ColourIndex = 0;
@@ -27,6 +32,20 @@ public class CustomiserUI : MonoBehaviour
     {
         DisplayShip();
         UpdateCustomiserColours();
+    }
+
+    private void Update()
+    {
+        if (mColourLineObject && mTrim1ColourLineObject && mTrim2ColourLineObject)
+        {
+            if (mShipList.Count > mShipIndex && mShipList[mShipIndex])
+            {
+                mColourLineObject.transform.position = mShipList[mShipIndex].GetShipColourAttach().transform.position;
+                mTrim1ColourLineObject.transform.position = mShipList[mShipIndex].GetTrim1ColourAttach().transform.position;
+                mTrim2ColourLineObject.transform.position = mShipList[mShipIndex].GetTrim2ColourAttach().transform.position;
+            }
+        }
+
     }
 
     public void OnNextColourPressed(bool increment = true)
@@ -178,5 +197,22 @@ public class CustomiserUI : MonoBehaviour
                 mColours.Insert(0, startingColour);
             }
         }
+    }
+
+    public void OnHomeButtonPressed()
+    {
+        ReturnToMainMenu();
+    }
+
+    public void OnAcceptButtonPressed()
+    {
+        // Save Ship Out
+        ReturnToMainMenu();
+    }
+
+    private void ReturnToMainMenu()
+    {
+        LoadSceneOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+        LoadSceneOperation.allowSceneActivation = true;
     }
 }

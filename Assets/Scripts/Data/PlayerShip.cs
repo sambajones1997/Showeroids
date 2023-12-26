@@ -33,30 +33,30 @@ public class PlayerShip : MonoBehaviour
         return mShipDetailsSprite;
     }
 
-    public Vector3 GetShipColourLocation()
+    public GameObject GetShipColourAttach()
     {
         if (mBodyColourLocation)
         {
-            return mBodyColourLocation.transform.position;
+            return mBodyColourLocation;
         }
-        return Vector3.zero;
+        return null;
     }
 
-    public Vector3 GetTrim1ColourLocation()
+    public GameObject GetTrim1ColourAttach()
     {
         if (mTrim1ColourLocation)
         {
-            return mTrim1ColourLocation.transform.position;
+            return mTrim1ColourLocation;
         }
-        return Vector3.zero;
+        return null;
     }
 
-    public Vector3 GetTrim2ColourLocation()
+    public GameObject GetTrim2ColourAttach()
     {
         if (mTrim2ColourLocation)
         {
-            return mTrim2ColourLocation.transform.position;
+            return mTrim2ColourLocation;
         }
-        return Vector3.zero;
+        return null;
     }
 }
