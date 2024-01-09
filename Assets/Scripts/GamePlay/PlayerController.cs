@@ -17,9 +17,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float deccelerationMultiplier = 2.0f;
     [SerializeField] float speedSnap = 0.5f;
 
-    private void Start()
+    private void OnEnable()
     {
+        transform.SetParent(null);
     }
+
     // Update is called once per frame
     void Update()
     {

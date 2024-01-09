@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,8 +22,11 @@ public class CustomiserUI : MonoBehaviour
     [Header("Colours")]
     [SerializeField] List<Color> mColours = new List<Color>();
     [SerializeField] string mTintColourName = "_TintColour";
+    [Header("Misc UI")]
+    [SerializeField] GameObject mAcceptShipButton;
 
     AsyncOperation LoadSceneOperation;
+    bool bShipMarkedDirty = false;
     int mColourIndex = 0;
     int mTrim1ColourIndex = 0;
     int mTrim2ColourIndex = 0;
@@ -30,7 +34,9 @@ public class CustomiserUI : MonoBehaviour
 
     private void Start()
     {
+        ReadInPlayerShipData();
         DisplayShip();
+        UpdateShipSpriteAndColours();
         UpdateCustomiserColours();
     }
 
@@ -46,6 +52,10 @@ public class CustomiserUI : MonoBehaviour
             }
         }
 
+        if (bShipMarkedDirty && mAcceptShipButton && !mAcceptShipButton.activeSelf)
+        {
+            mAcceptShipButton.SetActive(true);
+        }
     }
 
     public void OnNextColourPressed(bool increment = true)
@@ -75,7 +85,7 @@ public class CustomiserUI : MonoBehaviour
     public void OnNextTrim1ColourPressed(bool increment = true)
     {
         ChangeTrim(ref mTrim1ColourIndex, increment);
-
+        
         UpdateShipSpriteAndColours();
         UpdateCustomiserColours();
     }
@@ -107,6 +117,8 @@ public class CustomiserUI : MonoBehaviour
         {
             trimIndex = mColours.Count - 1;
         }
+
+        bShipMarkedDirty = true;
     }
 
     public void OnNextShipPressed(bool increment = true)
@@ -134,6 +146,7 @@ public class CustomiserUI : MonoBehaviour
 
         DisplayShip();
         UpdateShipSpriteAndColours();
+        bShipMarkedDirty = true;
     }
 
     private void UpdateShipSpriteAndColours()
@@ -207,12 +220,29 @@ public class CustomiserUI : MonoBehaviour
     public void OnAcceptButtonPressed()
     {
         // Save Ship Out
-        ReturnToMainMenu();
+        bShipMarkedDirty = false;
+        mAcceptShipButton.SetActive(false);
+        SaveOutPlayerShipData();
     }
 
     private void ReturnToMainMenu()
     {
         LoadSceneOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
         LoadSceneOperation.allowSceneActivation = true;
+    }
+
+    private void SaveOutPlayerShipData()
+    {
+        PlayerData playerData = new PlayerData(mShipIndex, mColourIndex, mTrim1ColourIndex, mTrim2ColourIndex);
+        ShoweroidsFileSystem.WriteShipDataFile(playerData);
+    }
+
+    private void ReadInPlayerShipData()
+    {
+        PlayerData playerData = ShoweroidsFileSystem.ReadShipDataFile();
+        mShipIndex = playerData.mShipIndex;
+        mColourIndex = playerData.mMainBodyColour;
+        mTrim1ColourIndex = playerData.mTrim1Colour;
+        mTrim2ColourIndex = playerData.mTrim2Colour;
     }
 }

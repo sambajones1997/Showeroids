@@ -6,12 +6,18 @@ public class SimpleSpriteMover : MonoBehaviour
 {
     public enum EMoveBehaviour { Move, Loop, Destroy }
     public enum ESimpleMoverState { Idle, Delay, Moving };
+
+    [Header("Movement Behaviour")]
     [SerializeField] float mDelay = 0.0f;
     [SerializeField] float mSpriteSpeed = 2.0f;
     [SerializeField] float mMoveTimer = 2.0f;
     [SerializeField] Vector3 mMoveDirection = Vector3.down;
     [SerializeField] EMoveBehaviour mMoveBehaviour = EMoveBehaviour.Move;
     ESimpleMoverState mSimpleMoverState = ESimpleMoverState.Delay;
+
+    [Header("Post Movement Behaviour")]
+    [SerializeField] List<MonoBehaviour> mComponentsToActivate = new List<MonoBehaviour>();
+    [SerializeField] List<MonoBehaviour> mComponentsToDeActivate = new List<MonoBehaviour>();
 
     float mMoveTimeRemaining = 0.0f;
 
@@ -60,6 +66,7 @@ public class SimpleSpriteMover : MonoBehaviour
             mMoveTimeRemaining -= Time.deltaTime;
             if (mMoveTimeRemaining <= 0.0f)
             {
+                ActivateDeactivateComponents();
                 switch (mMoveBehaviour)
                 {
                     case EMoveBehaviour.Destroy:
@@ -73,6 +80,25 @@ public class SimpleSpriteMover : MonoBehaviour
                         mMoveTimeRemaining = mMoveTimer;
                         break;
                 }
+            }
+        }
+    }
+
+    void ActivateDeactivateComponents()
+    {
+        foreach (MonoBehaviour comp in mComponentsToActivate)
+        {
+            if (comp)
+            {
+                comp.enabled = true;
+            }
+        }
+
+        foreach (MonoBehaviour comp in mComponentsToDeActivate)
+        {
+            if (comp)
+            {
+                comp.enabled = false;
             }
         }
     }
