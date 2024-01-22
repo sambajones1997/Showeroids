@@ -9,23 +9,64 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] AudioMixer mAudioMixer;
     [SerializeField] GameObject mSettingsMenu;
     [SerializeField] GameObject mResetLeadboardPopup;
-    public void OnMasterVolumeSoundChanged(Slider volumeSlider)
+
+    [Header("Audio Sliders")]
+    [SerializeField] Slider mMasterVolSlider;
+    [SerializeField] Slider mMusicVolSlider;
+    [SerializeField] Slider mSFXVolSlider;
+
+    public void Start()
     {
-        mAudioMixer.SetFloat("MasterVol", volumeSlider.value);
+        AudioManager.LoadUserSettings();
+
+        // Audio Slider's Prepping
+
+        if (mMasterVolSlider)
+        {
+            mMasterVolSlider.value = AudioManager.GetRawMasterVol();
+        }
+
+        if (mMusicVolSlider)
+        {
+            mMusicVolSlider.value = AudioManager.GetRawMusicVol();
+        }
+        
+        if (mSFXVolSlider)
+        {
+            mSFXVolSlider.value = AudioManager.GetRawSFXVol();
+        }
+
+        // Audio Mixer Group Loading
+
+        if (mAudioMixer)
+        {
+            mAudioMixer.SetFloat(AudioManager.GetMasterVolName(), AudioManager.GetMasterVol());
+            mAudioMixer.SetFloat(AudioManager.GetMusicVolName(), AudioManager.GetMusicVol());
+            mAudioMixer.SetFloat(AudioManager.GetSFXVolName(), AudioManager.GetSFXVol());
+        }
     }
 
-    public void OnMusicVolumeSoundChanged(Slider volumeSlider)
+    public void OnMasterVolumeSoundChanged()
     {
-        mAudioMixer.SetFloat("MusicVol", volumeSlider.value);
+        AudioManager.SetMasterVol(mMasterVolSlider.value);
+        mAudioMixer.SetFloat(AudioManager.GetMasterVolName(), AudioManager.GetMasterVol());
+    }
+     
+    public void OnMusicVolumeSoundChanged()
+    {
+        AudioManager.SetMusicVol(mMusicVolSlider.value);
+        mAudioMixer.SetFloat(AudioManager.GetMusicVolName(), AudioManager.GetMusicVol());
     }
 
-    public void OnSFXVolumeSoundChanged(Slider volumeSlider)
+    public void OnSFXVolumeSoundChanged()
     {
-        mAudioMixer.SetFloat("SFXVol", volumeSlider.value);
+        AudioManager.SetSFXVol(mSFXVolSlider.value);
+        mAudioMixer.SetFloat(AudioManager.GetSFXVolName(), AudioManager.GetSFXVol());
     }
 
     public void OnCloseSettingsMenuPressed()
     {
+        SaveUserSettings();
         mSettingsMenu.SetActive(false);
     }
 
@@ -33,5 +74,10 @@ public class SettingsMenuUI : MonoBehaviour
     {
         mResetLeadboardPopup.SetActive(true);
         mSettingsMenu.SetActive(false);
+    }
+
+    private void SaveUserSettings()
+    {
+        AudioManager.SaveUserSettings();
     }
 }
