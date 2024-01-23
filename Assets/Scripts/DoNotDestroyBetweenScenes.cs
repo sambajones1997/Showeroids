@@ -6,6 +6,16 @@ public class DoNotDestroyBetweenScenes : MonoBehaviour
 {
     private void Awake()
     {
+        DoNotDestroyBetweenScenes[] doNotDestroyBetweenScenesObjects = FindObjectsOfType<DoNotDestroyBetweenScenes>();
+
+        foreach (DoNotDestroyBetweenScenes doNotDestroyObj in doNotDestroyBetweenScenesObjects)
+        {
+            if (doNotDestroyObj != this && doNotDestroyObj.gameObject.name == gameObject.name)
+            {
+                Destroy(gameObject);
+            }
+        }
+
         DontDestroyOnLoad(gameObject);
     }
 
