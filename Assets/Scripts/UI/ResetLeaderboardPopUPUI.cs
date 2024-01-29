@@ -15,6 +15,7 @@ public class ResetLeaderboardPopUPUI : MonoBehaviour
     public void OnConfirmButtonPressed()
     {
         // Reset Leaderboard
+        ShoweroidsFileSystem.ResetLeaderBoard();
         ClosePopUp();
     }
 

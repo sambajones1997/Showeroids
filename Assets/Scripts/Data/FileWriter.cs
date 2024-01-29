@@ -24,7 +24,6 @@ public static class ShoweroidsFileSystem
         writer.WriteLine(shipPlayerData.mTrim2Colour);
 
         writer.Flush();
-
         writer.Close();
     }
 
@@ -51,5 +50,62 @@ public static class ShoweroidsFileSystem
         }
 
         return playerData;
+    }
+
+    public static void ResetLeaderBoard()
+    {
+        List<SLeaderBoardUserData> leaderBoardUserData = new List<SLeaderBoardUserData>();
+        WriteLeaderBoard(ref leaderBoardUserData);
+    }
+
+    public static void WriteLeaderBoard(ref List<SLeaderBoardUserData> leaderBoardUserData)
+    {
+        string path = Application.persistentDataPath + DirectoryPath;
+
+        //Write some text to the test.txt file
+        if (!File.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        StreamWriter writer = File.CreateText(path + ShipDataLocation);
+        foreach (SLeaderBoardUserData userData in leaderBoardUserData)
+        {
+            writer.WriteLine(userData.mName + "," + userData.mScore);
+        }
+
+        writer.Flush();
+        writer.Close();
+    }
+
+    public static void ReadLeaderBoard(out List<SLeaderBoardUserData> leaderBoardUserData)
+    {
+        List<SLeaderBoardUserData> dataList = new List<SLeaderBoardUserData>();
+
+        string path = Application.persistentDataPath + DirectoryPath + ShipDataLocation;
+
+        //Write some text to the test.txt file
+        if (File.Exists(path))
+        {
+            FileStream fileStream = File.OpenRead(path);
+            string[] leaderBoardEntries = File.ReadAllLines(path);
+            fileStream.Close();
+
+            foreach(string entry in leaderBoardEntries)
+            {
+                string[] leaderBoardDataString = entry.Split(new char[] { ',' });
+
+                if (leaderBoardDataString.Length == 2)
+                {
+                    string leaderBoardName = leaderBoardDataString[0];
+                    int leaderBoardScore = 0;
+                    int.TryParse(leaderBoardDataString[1], out leaderBoardScore);
+
+                    dataList.Add(new SLeaderBoardUserData(leaderBoardName, leaderBoardScore));
+                }
+            }
+        }
+
+        leaderBoardUserData = dataList;
     }
 }
