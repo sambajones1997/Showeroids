@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float deccelerationMultiplier = 2.0f;
     [SerializeField] float speedSnap = 0.5f;
 
+    protected bool bIsInputEnabled = true;
+
     private void OnEnable()
     {
         transform.SetParent(null);
@@ -44,7 +46,16 @@ public class PlayerController : MonoBehaviour
 
     void CacheInput()
     {
+        if (!bIsInputEnabled)
+        {
+            return;
+        }
+#if UNITY_ANDROID
+// Cache input from Gyro or UI
+        horizontalInput = Mathf.Clamp(Input.gyro.attitude.eulerAngles.x, -1.0f, 1.0f);
+#else
         horizontalInput = Input.GetAxisRaw("Horizontal");
+#endif //UNITY_ANDROID
     }
 
     void ApplyAcceleration(float axis)
@@ -68,5 +79,10 @@ public class PlayerController : MonoBehaviour
         }
 
         speed = Mathf.Clamp(speed + acceleration, -maxSpeed, maxSpeed);
+    }
+
+    public void SetInputEnabled(bool InputEnabled = true)
+    {
+        bIsInputEnabled = InputEnabled;
     }
 }

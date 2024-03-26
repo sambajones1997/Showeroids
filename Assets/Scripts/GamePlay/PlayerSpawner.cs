@@ -30,6 +30,6 @@ public class PlayerSpawner : MonoBehaviour
 
     public void EnablePlayerControl()
     {
-        mShip.GetComponent<SimpleSpriteMover>().enabled = true;
+       // mShip.GetComponent<SimpleSpriteMover>().enabled = true;
     }
 }
