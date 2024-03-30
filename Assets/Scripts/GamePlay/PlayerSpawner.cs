@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] List<PlayerShip> Ships = new List<PlayerShip>();
+    [SerializeField] GameObject mPlayerRoot;
+    [SerializeField] List<GameObject> Ships = new List<GameObject>();
     [SerializeField] List<Color> mColours = new List<Color>();
     [SerializeField] string mTintColourName = "_TintColour";
     PlayerShip mShip;
@@ -13,9 +14,8 @@ public class PlayerSpawner : MonoBehaviour
     {
         PlayerData playerData = ShoweroidsFileSystem.ReadShipDataFile();
 
-        mShip = Ships[playerData.mShipIndex];
-
-        mShip.gameObject.SetActive(true);
+        GameObject ship = Instantiate(Ships[playerData.mShipIndex], mPlayerRoot.transform);
+        mShip = ship.GetComponent<PlayerShip>();
 
         if (mShip.GetShipBodySprite())
         {

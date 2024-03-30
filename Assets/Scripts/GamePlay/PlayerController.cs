@@ -19,11 +19,6 @@ public class PlayerController : MonoBehaviour
 
     protected bool bIsInputEnabled = true;
 
-    private void OnEnable()
-    {
-        transform.SetParent(null);
-    }
-
     // Update is called once per frame
     void Update()
     {

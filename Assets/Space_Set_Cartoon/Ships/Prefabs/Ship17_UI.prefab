@@ -326,7 +326,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1137270605250236605}
   - component: {fileID: 5814154929227293420}
-  - component: {fileID: 6100029378531646818}
   m_Layer: 0
   m_Name: Ship17_UI
   m_TagString: Untagged
@@ -372,24 +371,6 @@ MonoBehaviour:
   mBodyColourLocation: {fileID: 5790969427111541732}
   mTrim1ColourLocation: {fileID: 8303104455849391927}
   mTrim2ColourLocation: {fileID: 1331066888426791844}
---- !u!114 &6100029378531646818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6134467170885088951}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d99d7f5e66f03de46baa7b56600edc63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  horizontalBounds: 10
-  deadzone: 0.1
-  deccelerationSpeed: 2
-  deccelerationMultiplier: 2
-  speedSnap: 0.5
 --- !u!1 &8109289055504214687
 GameObject:
   m_ObjectHideFlags: 0
