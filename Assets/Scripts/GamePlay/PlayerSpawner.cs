@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] GameObject mPlayerRoot;
+    [SerializeField] PlayerController mPlayerController;
     [SerializeField] List<GameObject> Ships = new List<GameObject>();
     [SerializeField] List<Color> mColours = new List<Color>();
     [SerializeField] string mTintColourName = "_TintColour";
@@ -16,6 +17,7 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject ship = Instantiate(Ships[playerData.mShipIndex], mPlayerRoot.transform);
         mShip = ship.GetComponent<PlayerShip>();
+        mPlayerController.SetPlayerShip(mShip);
 
         if (mShip.GetShipBodySprite())
         {

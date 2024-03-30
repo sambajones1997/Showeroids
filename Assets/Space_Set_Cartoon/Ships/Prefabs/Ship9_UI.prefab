@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5ae091ce3aa5b42826d516cdbf2b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mShipLifeSprite: {fileID: 21300000, guid: 0abbe757246ffb34ca4b48accf2bea39, type: 3}
   mShipBodySprite: {fileID: 2929367253536373286}
   mShipTrim1Sprite: {fileID: 4123837442958469059}
   mShipTrim2Sprite: {fileID: 1609996363216768142}

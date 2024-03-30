@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Stats")]
+    public int mMaxLives = 3;
+    public int mLives = 3;
 
+    [Header("Player Controls")]
     [SerializeField] const float maxSpeed = 5.0f;
     [SerializeField] float speed = 0.0f;
 
@@ -18,6 +22,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speedSnap = 0.5f;
 
     protected bool bIsInputEnabled = true;
+
+    [Header("Component References")]
+    [SerializeField] PlayerScore mPlayerScore;
+    [SerializeField] PlayerShip mPlayerShip;
+
+    private void OnEnable()
+    {
+        mPlayerScore.enabled = true;
+        mPlayerScore.bUpdateScore = true;
+    }
 
     // Update is called once per frame
     void Update()
@@ -79,5 +93,20 @@ public class PlayerController : MonoBehaviour
     public void SetInputEnabled(bool InputEnabled = true)
     {
         bIsInputEnabled = InputEnabled;
+    }
+
+    public int GetCurrentLives()
+    {
+        return mLives;
+    }
+
+    public PlayerShip GetPlayerShip()
+    {
+        return mPlayerShip;
+    }
+
+    public void SetPlayerShip(PlayerShip ship)
+    {
+        mPlayerShip = ship;
     }
 }

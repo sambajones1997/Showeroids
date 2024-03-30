@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerShip : MonoBehaviour
 {
+    [SerializeField] Sprite mShipLifeSprite;
+
     [SerializeField] SpriteRenderer mShipBodySprite;
     [SerializeField] SpriteRenderer mShipTrim1Sprite;
     [SerializeField] SpriteRenderer mShipTrim2Sprite;
@@ -31,6 +33,11 @@ public class PlayerShip : MonoBehaviour
     public SpriteRenderer GetShipDetailsSprite()
     {
         return mShipDetailsSprite;
+    }
+
+    public Sprite GetShipLifeSprite()
+    {
+        return mShipLifeSprite;
     }
 
     public GameObject GetShipColourAttach()

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerScore : MonoBehaviour
 {
-    public int m_Score;
+    public int m_CurrentScore;
+    public float m_Score;
     public float m_ScoreMultiplier = 1.0f;
 
     public int m_impactPenalty = -100;
@@ -29,7 +30,8 @@ public class PlayerScore : MonoBehaviour
             return;
         }
 
-        m_Score += (int)(m_scorePerSecond * Time.deltaTime * m_ScoreMultiplier);
+        m_Score += (m_scorePerSecond * Time.deltaTime * m_ScoreMultiplier);
+        m_CurrentScore = (int)(m_Score);
     }
 
     public void ShipHit()
