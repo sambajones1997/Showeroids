@@ -68,10 +68,19 @@ public static class ShoweroidsFileSystem
             Directory.CreateDirectory(path);
         }
 
+        int maxLeaderboardEntries = 10;
+
         StreamWriter writer = File.CreateText(path + ShipDataLocation);
         foreach (SLeaderBoardUserData userData in leaderBoardUserData)
         {
             writer.WriteLine(userData.mName + "," + userData.mScore);
+            maxLeaderboardEntries--;
+
+            // Lets limit our leaderbaord entries to just what will be displayed
+            if (maxLeaderboardEntries <= 0)
+            {
+                break;
+            }
         }
 
         writer.Flush();

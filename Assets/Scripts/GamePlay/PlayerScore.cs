@@ -12,6 +12,8 @@ public class PlayerScore : MonoBehaviour
 
     public float m_timeSinceLastHit = 0.0f;
 
+    public bool bUpdateScore = true;
+
     public List<KeyValuePair<float, float>> m_MultiplierTimes = new List<KeyValuePair<float, float>>();
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,11 @@ public class PlayerScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!bUpdateScore)
+        {
+            return;
+        }
+
         m_Score += (int)(m_scorePerSecond * Time.deltaTime * m_ScoreMultiplier);
     }
 
@@ -29,5 +36,10 @@ public class PlayerScore : MonoBehaviour
     {
         m_ScoreMultiplier = 1.0f;
         m_Score -= m_impactPenalty;
+    }
+
+    public void LevelEnded()
+    {
+        bUpdateScore = false;
     }
 }
