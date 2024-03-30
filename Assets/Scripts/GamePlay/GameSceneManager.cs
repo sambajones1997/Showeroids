@@ -6,13 +6,13 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameSceneManager : MonoBehaviour
 {
     public enum EGameState { Intro, Playing, Outro, Ended, Dead }
-
+    [SerializeField] GameObject Destination;
     EGameState mGameState = EGameState.Intro;
     PlayerShip mPlayerShip;
     PlayerController mPlayerController;
     PlayerScore mPlayerScore;
 
-    float mLevelTimer = 30.0f;
+    public float mLevelTimer = 30.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +36,10 @@ public class GameSceneManager : MonoBehaviour
     void EndGame()
     {
         mGameState = EGameState.Outro;
-        mPlayerController.SetInputEnabled(false);
+        mPlayerController.LevelOver();
         mPlayerScore.bUpdateScore = false;
+
+        Destination.GetComponent<SimpleSpriteMover>().enabled = true;
     }
 
     public void SetActivePlayer(PlayerShip ship, PlayerController controller, PlayerScore score)

@@ -26,11 +26,14 @@ public class PlayerController : MonoBehaviour
     [Header("Component References")]
     [SerializeField] PlayerScore mPlayerScore;
     [SerializeField] PlayerShip mPlayerShip;
+    [SerializeField] GameSceneManager mGameSceneManager;
 
     private void OnEnable()
     {
         mPlayerScore.enabled = true;
         mPlayerScore.bUpdateScore = true;
+        mGameSceneManager.IntroOver();
+        mGameSceneManager.SetActivePlayer(mPlayerShip, this, mPlayerScore);
     }
 
     // Update is called once per frame
@@ -93,6 +96,12 @@ public class PlayerController : MonoBehaviour
     public void SetInputEnabled(bool InputEnabled = true)
     {
         bIsInputEnabled = InputEnabled;
+    }
+
+    public void LevelOver()
+    {
+        GetComponent<SimpleSpriteMover>().enabled = true;
+        SetInputEnabled(false);
     }
 
     public int GetCurrentLives()
