@@ -7,6 +7,7 @@ public static class ShoweroidsFileSystem
 {
     static string DirectoryPath = "/Data";
     static string ShipDataLocation = "/ShipData.txt";
+    static string LeaderBoardLocation = "/Leaderboard.txt";
     public static void WriteShipDataFile(PlayerData shipPlayerData)
     {
         string path = Application.persistentDataPath + DirectoryPath;
@@ -91,7 +92,7 @@ public static class ShoweroidsFileSystem
     {
         List<SLeaderBoardUserData> dataList = new List<SLeaderBoardUserData>();
 
-        string path = Application.persistentDataPath + DirectoryPath + ShipDataLocation;
+        string path = Application.persistentDataPath + DirectoryPath + LeaderBoardLocation;
 
         //Write some text to the test.txt file
         if (File.Exists(path))
@@ -106,13 +107,17 @@ public static class ShoweroidsFileSystem
 
                 if (leaderBoardDataString.Length == 2)
                 {
-                    string leaderBoardName = leaderBoardDataString[0];
                     int leaderBoardScore = 0;
-                    int.TryParse(leaderBoardDataString[1], out leaderBoardScore);
+                    int.TryParse(leaderBoardDataString[0], out leaderBoardScore);
+                    string leaderBoardName = leaderBoardDataString[1];
 
                     dataList.Add(new SLeaderBoardUserData(leaderBoardName, leaderBoardScore));
                 }
             }
+        }
+        else
+        {
+            File.CreateText(path);
         }
 
         leaderBoardUserData = dataList;

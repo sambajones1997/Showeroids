@@ -5,6 +5,7 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] GameObject mSettingsCanvas;
     [SerializeField] GameObject mMainMenuCanvas;
+    [SerializeField] GameObject mLeaderBoardCanvas;
     AsyncOperation LoadSceneOperation;
 
     public void Start()
@@ -26,7 +27,9 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnLeaderboardPressed()
     {
-
+        mSettingsCanvas.SetActive(false);
+        mMainMenuCanvas.SetActive(false);
+        mLeaderBoardCanvas.SetActive(true);
     }
 
     public void OnHelpPressed()
@@ -44,6 +47,7 @@ public class MainMenuUI : MonoBehaviour
         mSettingsCanvas.SetActive(true);
         mMainMenuCanvas.SetActive(false);
     }
+
 
     public void ShowCanvas(bool showCanvas)
     {

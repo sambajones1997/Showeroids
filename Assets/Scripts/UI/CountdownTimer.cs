@@ -8,6 +8,9 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI m_TimerText;
     [SerializeField] float m_timeBeforeTimer = 1.0f;
 
+    [Header("Post Countdown Behaviour")]
+    [SerializeField] List<MonoBehaviour> mComponentsToActivate = new List<MonoBehaviour>();
+
     float m_Countdown = 3.5f;
     int m_Time = 3;
 
@@ -38,6 +41,14 @@ public class CountdownTimer : MonoBehaviour
             m_TimerText.text = "GO!";
             if (m_Countdown <= 0.0f)
             {
+                foreach (MonoBehaviour comp in mComponentsToActivate)
+                {
+                    if (comp)
+                    {
+                        comp.enabled = true;
+                    }
+                }
+
                 Destroy(m_TimerText.gameObject);
                 Destroy(this);
             }

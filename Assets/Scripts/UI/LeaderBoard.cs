@@ -54,6 +54,8 @@ public class LeaderBoard : MonoBehaviour
                 mLeaderBoardEntries[leaderBoardIndex].GetLeaderBoardEntryScoreText().text = user.mScore.ToString();
                 mLeaderBoardEntries[leaderBoardIndex].gameObject.SetActive(true);
             }
+
+            leaderBoardIndex++;
         }
     }
 }
