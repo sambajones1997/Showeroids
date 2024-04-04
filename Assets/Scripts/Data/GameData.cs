@@ -1,9 +1,8 @@
-
 public static class GameData
 {
-    public static LevelData GameLevelData { get; set; }
-    public static float CurrentScore { get; set; }
-    public static int CurrentScoreTrunc { get; private set; }
+    public static LevelData GameLevelData = new LevelData(0, 0);
+    public static float CurrentScore = 0.0f;
+    public static int CurrentScoreTrunc = 0;
 
     public static void SetCurrentScore(float score)
     {

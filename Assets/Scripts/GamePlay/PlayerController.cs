@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     float horizontalInput = 0.0f;
 
-    [SerializeField] float horizontalBounds = 10.0f;
+    float horizontalBounds = 8.5f;
 
     [SerializeField] float deadzone = 0.1f;
     [SerializeField] float deccelerationSpeed = 2.0f;
@@ -47,10 +47,12 @@ public class PlayerController : MonoBehaviour
         if (horizontal.x <= -horizontalBounds)
         {
             horizontal.x = -horizontalBounds;
+            speed = 0.0f;
         }
         else if (horizontal.x >= horizontalBounds)
         {
             horizontal.x = horizontalBounds;
+            speed = 0.0f;
         }
 
         transform.position = horizontal;
@@ -62,8 +64,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-#if UNITY_ANDROID
-// Cache input from Gyro or UI
+#if UNITY_ANDROID && !UNITY_EDITOR
+        // Cache input from Gyro or UI
         horizontalInput = Mathf.Clamp(Input.gyro.attitude.eulerAngles.x, -1.0f, 1.0f);
 #else
         horizontalInput = Input.GetAxisRaw("Horizontal");
