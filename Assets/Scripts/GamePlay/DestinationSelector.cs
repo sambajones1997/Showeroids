@@ -9,12 +9,8 @@ public class DestinationSelector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mSpriteRenderer.sprite = mDestinationSprites[Random.Range(0, mDestinationSprites.Count - 1)];
+        mSpriteRenderer.sprite = mDestinationSprites[GameData.GetLevelIndex()];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int GetNumDestinations() {  return mDestinationSprites.Count; }
 }

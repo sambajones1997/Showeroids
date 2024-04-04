@@ -44,4 +44,9 @@ public class PlayerScore : MonoBehaviour
     {
         bUpdateScore = false;
     }
+
+    public float GetCurrentScore()
+    {
+        return m_CurrentScore;
+    }
 }
