@@ -326,6 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1137270605250236605}
   - component: {fileID: 5814154929227293420}
+  - component: {fileID: 6133809412657583605}
   m_Layer: 0
   m_Name: Ship7_UI
   m_TagString: Untagged
@@ -372,6 +373,29 @@ MonoBehaviour:
   mBodyColourLocation: {fileID: 5790969427111541732}
   mTrim1ColourLocation: {fileID: 8303104455849391927}
   mTrim2ColourLocation: {fileID: 1331066888426791844}
+--- !u!136 &6133809412657583605
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134467170885088951}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Height: 8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8109289055504214687
 GameObject:
   m_ObjectHideFlags: 0

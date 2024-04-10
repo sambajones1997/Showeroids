@@ -31,7 +31,7 @@ public class GameSceneUI : MonoBehaviour
         m_ScoreText.text = m_PlayerScore.m_CurrentScore.ToString();
     }
 
-    private void FixedUpdate()
+    public void PlayerLivesChanged()
     {
         if (m_PlayerController)
         {

@@ -8,19 +8,13 @@ public class GameSceneManager : MonoBehaviour
 {
     public enum EGameState { Intro, Playing, Outro, Ended, Dead }
     [SerializeField] GameObject Destination;
+    [SerializeField] GameSceneUI mGameSceneUI;
     EGameState mGameState = EGameState.Intro;
     PlayerShip mPlayerShip;
     PlayerController mPlayerController;
     PlayerScore mPlayerScore;
 
     public float mLevelTimer = 30.0f;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void Update()
     {
@@ -90,5 +84,26 @@ public class GameSceneManager : MonoBehaviour
     {
         AsyncOperation SceneLoader = SceneManager.LoadSceneAsync(0);
         SceneLoader.allowSceneActivation = true;
+    }
+
+    public void GameOver()
+    {
+        if (mPlayerController)
+        {
+            mPlayerController.LevelOver();
+        }
+    }
+
+    public void OnPlayerTakenHit(int RemainingLives)
+    {
+        if (mGameSceneUI)
+        {
+            mGameSceneUI.PlayerLivesChanged();
+        }
+
+        if (RemainingLives < 0)
+        {
+            GameOver();
+        }
     }
 }

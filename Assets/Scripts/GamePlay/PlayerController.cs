@@ -106,6 +106,11 @@ public class PlayerController : MonoBehaviour
         SetInputEnabled(false);
     }
 
+    public void TakeHit()
+    {
+        mLives--;
+    }
+
     public int GetCurrentLives()
     {
         return mLives;
