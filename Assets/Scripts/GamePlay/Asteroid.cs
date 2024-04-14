@@ -15,6 +15,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField] float MinRotationSpeed = 15.0f;
     [SerializeField] float MaxRotationSpeed = 45.0f;
 
+    AsteroidPoolingManager Manager;
+
     float CurrentSpeed = 0.0f;
     float DeltaRotation = 0.0f;
 
@@ -24,6 +26,15 @@ public class Asteroid : MonoBehaviour
 
         CurrentSpeed = Random.Range(MinSpeed , MaxSpeed);
         DeltaRotation = Random.Range(MinRotationSpeed, MaxRotationSpeed);
+    }
+
+    private void OnEnable()
+    {
+        Manager = AsteroidPoolingManager.GetPoolingManager();
+        if (Manager)
+        {
+
+        }
     }
 
     private void FixedUpdate()
@@ -45,6 +56,19 @@ public class Asteroid : MonoBehaviour
             pc.TakeHit();
         }
 
-        Destroy(gameObject);
+        if (FindManager() && Manager)
+        {
+            Manager.ReleaseObjectToPool(gameObject);
+        }        
+    }
+
+    private bool FindManager()
+    {
+        if (!Manager)
+        {
+            Manager = AsteroidPoolingManager.GetPoolingManager();
+        }
+
+        return Manager != null;
     }
 }

@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [Header("Player Controls")]
     [SerializeField] const float maxSpeed = 5.0f;
     [SerializeField] float speed = 0.0f;
+    [SerializeField] float DamageInvincibility = 0.5f;
 
     float horizontalInput = 0.0f;
 
     float horizontalBounds = 8.5f;
+
+    float DamageInvincibilityTimer = 0.0f;
 
     [SerializeField] float deadzone = 0.1f;
     [SerializeField] float deccelerationSpeed = 2.0f;
@@ -22,11 +25,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speedSnap = 0.5f;
 
     protected bool bIsInputEnabled = true;
+    protected bool bCanTakeDamage = true;
 
     [Header("Component References")]
     [SerializeField] PlayerScore mPlayerScore;
     [SerializeField] PlayerShip mPlayerShip;
     [SerializeField] GameSceneManager mGameSceneManager;
+    [SerializeField] AudioSource mAudioSource;
 
     private void OnEnable()
     {
@@ -56,6 +61,19 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = horizontal;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!bCanTakeDamage)
+        {
+            DamageInvincibilityTimer -= Time.fixedDeltaTime;
+
+            if (DamageInvincibilityTimer < 0.0f)
+            {
+                bCanTakeDamage = true;
+            }
+        }
     }
 
     void CacheInput()
@@ -108,7 +126,18 @@ public class PlayerController : MonoBehaviour
 
     public void TakeHit()
     {
+        if (!bCanTakeDamage)
+        {
+            return;
+        }
+
         mLives--;
+        if (mAudioSource)
+        {
+            mAudioSource.Play();
+            DamageInvincibilityTimer = DamageInvincibility;
+            bCanTakeDamage = false;
+        }
     }
 
     public int GetCurrentLives()

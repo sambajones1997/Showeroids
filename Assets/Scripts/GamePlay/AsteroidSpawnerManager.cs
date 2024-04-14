@@ -31,4 +31,20 @@ public class AsteroidSpawnerManager : MonoBehaviour
             AsteroidSpawnerToUse.SpawnerObject.SetActive(true);
         }
     }
+
+    public void SpawnAsteroid(GameObject Spawner)
+    {
+        AsteroidPoolingManager Manager = AsteroidPoolingManager.GetPoolingManager();
+
+        if (Manager)
+        {
+            GameObject AsteroidObject = Manager.GetPooledObject();
+            if (AsteroidObject)
+            {
+                AsteroidObject.transform.parent = null;
+                AsteroidObject.transform.SetPositionAndRotation(Spawner.transform.position, Quaternion.identity);
+                AsteroidObject.SetActive(true);
+            }
+        }
+    }
 }
