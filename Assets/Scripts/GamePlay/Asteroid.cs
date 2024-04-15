@@ -6,7 +6,7 @@ public class Asteroid : MonoBehaviour
 {
     [SerializeField] Rigidbody RigidBody;
     [SerializeField] GameObject AsteroidSprite;
-    [SerializeField] GameObject ImpactVFX;
+    [SerializeField] ParticleSystem ImpactVFX;
     [SerializeField] Vector3 MovementVector = Vector3.zero;
     [Header("Speed")]
     [SerializeField] float MinSpeed = 1.0f;
@@ -45,10 +45,6 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ImpactVFX)
-        {
-            Instantiate(ImpactVFX, transform.position, Quaternion.identity);
-        }
 
         PlayerController pc = other.transform.root.GetComponentInChildren<PlayerController>();
         if (pc)
@@ -58,7 +54,9 @@ public class Asteroid : MonoBehaviour
 
         if (FindManager() && Manager)
         {
-            Manager.ReleaseObjectToPool(gameObject);
+            GameObject explosion = Manager.GetPooledExplosion();
+            explosion.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            Manager.ReleaseAsteroidToPool(gameObject);
         }        
     }
 

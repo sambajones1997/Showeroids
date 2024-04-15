@@ -38,7 +38,7 @@ public class AsteroidSpawnerManager : MonoBehaviour
 
         if (Manager)
         {
-            GameObject AsteroidObject = Manager.GetPooledObject();
+            GameObject AsteroidObject = Manager.GetPooledAsteroid();
             if (AsteroidObject)
             {
                 AsteroidObject.transform.parent = null;

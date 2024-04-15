@@ -6,9 +6,11 @@ using UnityEngine;
 public class AsteroidPoolingManager : MonoBehaviour
 {
     public List<GameObject> Asteroids = new List<GameObject>();
+    public List<GameObject> Explosions = new List<GameObject>();
 
     [SerializeField]
     List<GameObject> AsteroidsToSpawn = new List<GameObject>();
+    GameObject ExplosionVFXToSpawn;
 
     static AsteroidPoolingManager Instance;
 
@@ -17,7 +19,7 @@ public class AsteroidPoolingManager : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject GetPooledObject()
+    public GameObject GetPooledAsteroid()
     {
         GameObject asteroid = null;
         if (Asteroids.Count > 0)
@@ -31,7 +33,21 @@ public class AsteroidPoolingManager : MonoBehaviour
         return asteroid;
     }
 
-    public void ReleaseObjectToPool(GameObject obj)
+    public GameObject GetPooledExplosion()
+    {
+        GameObject explosion = null;
+        if (Explosions.Count > 0)
+        {
+            explosion = Explosions[0];
+            Explosions.RemoveAt(0);
+            return explosion;
+        }
+
+        explosion = Instantiate(ExplosionVFXToSpawn);
+        return explosion;
+    }
+
+    public void ReleaseAsteroidToPool(GameObject obj)
     {
         obj.SetActive(false);
         obj.transform.parent = gameObject.transform;
