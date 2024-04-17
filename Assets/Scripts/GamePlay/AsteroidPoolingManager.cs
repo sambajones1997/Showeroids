@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class AsteroidPoolingManager : MonoBehaviour
 {
-    public List<GameObject> Asteroids = new List<GameObject>();
-    public List<GameObject> Explosions = new List<GameObject>();
+    public int PooledAsteroids = 0;
+    List<GameObject> Asteroids = new List<GameObject>();
+    List<GameObject> Explosions = new List<GameObject>();
 
-    [SerializeField]
-    List<GameObject> AsteroidsToSpawn = new List<GameObject>();
-    GameObject ExplosionVFXToSpawn;
+    [SerializeField] List<GameObject> AsteroidsToSpawn = new List<GameObject>();
+    [SerializeField] GameObject ExplosionVFXToSpawn;
 
     static AsteroidPoolingManager Instance;
 
@@ -26,6 +26,7 @@ public class AsteroidPoolingManager : MonoBehaviour
         {
             asteroid = Asteroids[0];
             Asteroids.RemoveAt(0);
+            PooledAsteroids--;
             return asteroid;
         }
 
@@ -53,6 +54,15 @@ public class AsteroidPoolingManager : MonoBehaviour
         obj.transform.parent = gameObject.transform;
         obj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         Asteroids.Add(obj);
+        PooledAsteroids = Asteroids.Count;
+    }
+
+    public void ReleaseExplosionToPool(GameObject obj)
+    {
+        obj.SetActive(false);
+        obj.transform.parent = gameObject.transform;
+        obj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        Explosions.Add(obj);
     }
 
     public static AsteroidPoolingManager GetPoolingManager()

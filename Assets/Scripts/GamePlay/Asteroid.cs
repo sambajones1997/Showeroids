@@ -6,7 +6,7 @@ public class Asteroid : MonoBehaviour
 {
     [SerializeField] Rigidbody RigidBody;
     [SerializeField] GameObject AsteroidSprite;
-    [SerializeField] ParticleSystem ImpactVFX;
+
     [SerializeField] Vector3 MovementVector = Vector3.zero;
     [Header("Speed")]
     [SerializeField] float MinSpeed = 1.0f;
@@ -22,9 +22,14 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
+        StartPooledObject();
+    }
+
+    public void StartPooledObject()
+    {
         MovementVector = new Vector3(Random.Range(-0.5f, 0.5f), -1.0f, 0.0f).normalized;
 
-        CurrentSpeed = Random.Range(MinSpeed , MaxSpeed);
+        CurrentSpeed = Random.Range(MinSpeed, MaxSpeed);
         DeltaRotation = Random.Range(MinRotationSpeed, MaxRotationSpeed);
     }
 
@@ -41,6 +46,11 @@ public class Asteroid : MonoBehaviour
     {
         RigidBody.MovePosition(RigidBody.position + (MovementVector * CurrentSpeed * Time.fixedDeltaTime));
         AsteroidSprite.transform.Rotate(Vector3.back * DeltaRotation * Time.fixedDeltaTime);
+
+        if (transform.position.y <= -6.0f)
+        {
+            DestroyAsteroid();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,9 +65,18 @@ public class Asteroid : MonoBehaviour
         if (FindManager() && Manager)
         {
             GameObject explosion = Manager.GetPooledExplosion();
+            explosion.SetActive(true);
             explosion.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        }
+        DestroyAsteroid();
+    }
+
+    private void DestroyAsteroid()
+    {
+        if (FindManager() && Manager)
+        {
             Manager.ReleaseAsteroidToPool(gameObject);
-        }        
+        }
     }
 
     private bool FindManager()
