@@ -3,9 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class SpawnPoint
+{
+    public SpawnPoint(GameObject gameObject, float timer)
+    {
+        SpawnPointLocation = gameObject;
+        SpawnTimer = timer;
+    }
+
+    public GameObject SpawnPointLocation;
+    public float SpawnTimer;
+}
+
 public class AsteroidSpawner : MonoBehaviour
 {
-    List<GameObject> SpawnPoints = new List<GameObject>();
+    List<SpawnPoint> SpawnPoints = new List<SpawnPoint>();
     AsteroidPoolingManager PoolManager;
     float Cooldown = 2.0f;
 
@@ -15,7 +27,7 @@ public class AsteroidSpawner : MonoBehaviour
         {
             if (t != transform)
             {
-                SpawnPoints.Add(t.gameObject);
+                SpawnPoints.Add(new SpawnPoint(t.gameObject, 0.0f));
             }
         } 
     }
@@ -24,11 +36,15 @@ public class AsteroidSpawner : MonoBehaviour
     {
         Cooldown -= Time.fixedDeltaTime;
 
+        foreach (SpawnPoint sp in SpawnPoints)
+        {
+            sp.SpawnTimer -= Time.fixedDeltaTime;
+        }
+
         if (Cooldown <= 0.0f)
         {
-            Cooldown = 2.0f;
-
             SpawnAsteroid();
+            Cooldown = 0.5f;
         }
     }
 
@@ -36,19 +52,32 @@ public class AsteroidSpawner : MonoBehaviour
     {
         PoolManager = AsteroidPoolingManager.GetPoolingManager();
 
-        if (PoolManager)
+        if (!PoolManager)
         {
-            GameObject obj = PoolManager.GetPooledAsteroid();
-            obj.SetActive(true);
+            return;
+        }
 
-            Vector3 Pos = SpawnPoints[Random.Range(0,SpawnPoints.Count - 1)].transform.position;
-            obj.transform.SetPositionAndRotation(Pos, transform.rotation);
-
-            Asteroid ast = obj.GetComponent<Asteroid>();
-
-            if (ast)
+        foreach (var Spawner in SpawnPoints)
+        {
+            if (Spawner.SpawnTimer <= 0.0f)
             {
-                ast.StartPooledObject();
+                GameObject obj = PoolManager.GetPooledAsteroid();
+                obj.SetActive(true);
+
+                Vector3 Pos = SpawnPoints[Random.Range(0, SpawnPoints.Count - 1)].SpawnPointLocation.transform.position;
+                Quaternion spawnRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+                obj.transform.SetPositionAndRotation(Pos, transform.rotation);
+                obj.GetComponentInChildren<Renderer>().transform.SetLocalPositionAndRotation(Vector3.zero, spawnRotation);
+
+                Asteroid ast = obj.GetComponent<Asteroid>();
+
+                if (ast)
+                {
+                    ast.StartPooledObject();
+                }
+
+                Spawner.SpawnTimer = 2.0f;
+                break;
             }
         }
     }
