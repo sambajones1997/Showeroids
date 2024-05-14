@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SimpleSpriteMover : MonoBehaviour
 {
@@ -12,12 +13,16 @@ public class SimpleSpriteMover : MonoBehaviour
     [SerializeField] float mSpriteSpeed = 2.0f;
     [SerializeField] float mMoveTimer = 2.0f;
     [SerializeField] Vector3 mMoveDirection = Vector3.down;
+    [SerializeField] GameObject mMoveTarget;
     [SerializeField] EMoveBehaviour mMoveBehaviour = EMoveBehaviour.Move;
     ESimpleMoverState mSimpleMoverState = ESimpleMoverState.Delay;
 
     [Header("Post Movement Behaviour")]
     [SerializeField] List<MonoBehaviour> mComponentsToActivate = new List<MonoBehaviour>();
+    [SerializeField] List<GameObject> mObjectsToActivate = new List<GameObject>();
     [SerializeField] List<MonoBehaviour> mComponentsToDeActivate = new List<MonoBehaviour>();
+    [SerializeField] List<GameObject> mObjectsToDeActivate = new List<GameObject>();
+    [SerializeField] UnityEvent SpriteMovementCompleted = new UnityEvent();
 
     float mMoveTimeRemaining = 0.0f;
 
@@ -61,6 +66,11 @@ public class SimpleSpriteMover : MonoBehaviour
     {
         if (mDelay <= 0.0f && mMoveTimeRemaining > 0.0f)
         {
+            if (mMoveTarget)
+            {
+                mMoveDirection = (mMoveTarget.transform.position - transform.position).normalized;
+            }
+
             transform.Translate(mMoveDirection * mSpriteSpeed * Time.deltaTime);
 
             mMoveTimeRemaining -= Time.deltaTime;
@@ -86,19 +96,13 @@ public class SimpleSpriteMover : MonoBehaviour
 
     void ActivateDeactivateComponents()
     {
+        SpriteMovementCompleted.Invoke();
+
         foreach (MonoBehaviour comp in mComponentsToActivate)
         {
             if (comp)
             {
                 comp.enabled = true;
-            }
-        }
-
-        foreach (MonoBehaviour comp in mComponentsToDeActivate)
-        {
-            if (comp)
-            {
-                comp.enabled = false;
             }
         }
     }

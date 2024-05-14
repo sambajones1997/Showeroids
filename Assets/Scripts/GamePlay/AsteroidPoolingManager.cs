@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 public class AsteroidPoolingManager : MonoBehaviour
 {
     public int PooledAsteroids = 0;
+    public int NumActiveAsteroids = 0;
     List<GameObject> Asteroids = new List<GameObject>();
     List<GameObject> Explosions = new List<GameObject>();
 
@@ -22,6 +21,8 @@ public class AsteroidPoolingManager : MonoBehaviour
     public GameObject GetPooledAsteroid()
     {
         GameObject asteroid = null;
+
+        NumActiveAsteroids++;
         if (Asteroids.Count > 0)
         {
             asteroid = Asteroids[0];
@@ -55,6 +56,7 @@ public class AsteroidPoolingManager : MonoBehaviour
         obj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         Asteroids.Add(obj);
         PooledAsteroids = Asteroids.Count;
+        NumActiveAsteroids--;
     }
 
     public void ReleaseExplosionToPool(GameObject obj)
@@ -68,5 +70,10 @@ public class AsteroidPoolingManager : MonoBehaviour
     public static AsteroidPoolingManager GetPoolingManager()
     {
         return Instance;
+    }
+
+    public int GetNumActiveAsteroids()
+    {
+        return NumActiveAsteroids;
     }
 }

@@ -13,25 +13,54 @@ public class GameSceneUI : MonoBehaviour
 
     [SerializeField] PlayerController m_PlayerController;
     [SerializeField] PlayerScore m_PlayerScore;
+    [SerializeField] GameObject m_LevelCompletedObject;
+    [SerializeField] GameObject m_GameOverObject;
     // Start is called before the first frame update
 
-    private void OnEnable()
+    private void Start()
     {
-        m_Life0Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
-        m_Life1Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
-        m_Life2Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
-
-        m_ScoreObject.SetActive(true);
-        m_LifeObject.SetActive(true);
+        if (m_PlayerController)
+        {
+            m_PlayerController.PlayerTakenHitEvent.AddListener(PlayerLivesChanged);
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        m_ScoreText.text = m_PlayerScore.m_CurrentScore.ToString();
+        if (m_PlayerScore)
+        {
+            m_ScoreText.text = m_PlayerScore.m_CurrentScore.ToString();
+        }
     }
 
-    public void PlayerLivesChanged()
+    public void OnGameOver()
+    {
+        DisplayGameOver(true);
+    }
+
+    public void OnLevelCompleted()
+    {
+        DisplayLevelCompleted(true);
+    }
+
+    void DisplayLevelCompleted(bool bDisplay = true)
+    {
+        if (m_LevelCompletedObject)
+        {
+            m_LevelCompletedObject.SetActive(bDisplay);
+        }
+    }
+
+    void DisplayGameOver(bool bDisplay = true)
+    {
+        if (m_GameOverObject)
+        {
+            m_GameOverObject.SetActive(bDisplay);
+        }
+    }
+
+    private void PlayerLivesChanged()
     {
         if (m_PlayerController)
         {
@@ -47,6 +76,19 @@ public class GameSceneUI : MonoBehaviour
                     m_Life2Sprite.enabled = false;
                     break;
             }
+        }
+    }
+
+    public void DisplayUI()
+    {
+        m_ScoreObject.SetActive(true);
+        m_LifeObject.SetActive(true);
+
+        if (m_PlayerController)
+        {
+            m_Life0Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
+            m_Life1Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
+            m_Life2Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
         }
     }
 }

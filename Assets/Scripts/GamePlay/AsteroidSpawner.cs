@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnPoint
@@ -18,33 +20,54 @@ public class SpawnPoint
 public class AsteroidSpawner : MonoBehaviour
 {
     List<SpawnPoint> SpawnPoints = new List<SpawnPoint>();
+    List<AsteroidSpawnPoint> m_AsteroidSpawnPoints = new List<AsteroidSpawnPoint>();
+    List<int> SpawnIndexes = new List<int>();
     AsteroidPoolingManager PoolManager;
-    float Cooldown = 2.0f;
+    [SerializeField] GameSceneManager mGameSceneManager;
+    float Cooldown = 0.0f;
 
     private void Start()
     {
+        int index = 0;
         foreach (Transform t in GetComponentsInChildren<Transform>())
         {
             if (t != transform)
             {
                 SpawnPoints.Add(new SpawnPoint(t.gameObject, 0.0f));
+                m_AsteroidSpawnPoints.Add(t.gameObject.GetComponent<AsteroidSpawnPoint>());
+                SpawnIndexes.Add(index);
+                index++;
             }
         } 
     }
 
     private void FixedUpdate()
     {
-        Cooldown -= Time.fixedDeltaTime;
-
-        foreach (SpawnPoint sp in SpawnPoints)
+        if (!mGameSceneManager)
         {
-            sp.SpawnTimer -= Time.fixedDeltaTime;
+            return;
         }
 
-        if (Cooldown <= 0.0f)
+        if (mGameSceneManager.GetLevelGameState() == GameSceneManager.EGameState.Outro ||
+                mGameSceneManager.GetLevelGameState() == GameSceneManager.EGameState.Ended)
         {
-            SpawnAsteroid();
-            Cooldown = 0.5f;
+            this.enabled = false;
+        }
+
+        if (mGameSceneManager.GetLevelGameState() == GameSceneManager.EGameState.Playing)
+        {
+            foreach (SpawnPoint sp in SpawnPoints)
+            {
+                sp.SpawnTimer -= Time.fixedDeltaTime;
+            }
+
+            Cooldown -= Time.fixedDeltaTime;
+
+            if (Cooldown <= 0.0f)
+            {
+                SpawnAsteroid();
+                Cooldown = 0.5f;
+            }
         }
     }
 
@@ -57,15 +80,16 @@ public class AsteroidSpawner : MonoBehaviour
             return;
         }
 
-        foreach (var Spawner in SpawnPoints)
+        for (int i = 0; i < SpawnPoints.Count; i++)
         {
-            if (Spawner.SpawnTimer <= 0.0f)
+            int index = SpawnIndexes[i];
+            if (SpawnPoints[index].SpawnTimer <= 0.0f)
             {
                 GameObject obj = PoolManager.GetPooledAsteroid();
                 obj.SetActive(true);
 
-                Vector3 Pos = SpawnPoints[Random.Range(0, SpawnPoints.Count - 1)].SpawnPointLocation.transform.position;
-                Quaternion spawnRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+                Vector3 Pos = SpawnPoints[index].SpawnPointLocation.transform.position;
+                Quaternion spawnRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, UnityEngine.Random.Range(0.0f, 360.0f)));
                 obj.transform.SetPositionAndRotation(Pos, transform.rotation);
                 obj.GetComponentInChildren<Renderer>().transform.SetLocalPositionAndRotation(Vector3.zero, spawnRotation);
 
@@ -73,12 +97,27 @@ public class AsteroidSpawner : MonoBehaviour
 
                 if (ast)
                 {
-                    ast.StartPooledObject();
+                    ast.StartPooledObject(m_AsteroidSpawnPoints[index].minX, m_AsteroidSpawnPoints[index].maxX);
                 }
 
-                Spawner.SpawnTimer = 2.0f;
+                SpawnPoints[index].SpawnTimer = 2.0f;
                 break;
             }
         }
+
+        ShuffleArrays();
     }
+
+    void ShuffleArrays()
+    {
+        for (int i = 0; i < SpawnIndexes.Count; i++)
+        {
+            int r = UnityEngine.Random.Range(i, SpawnIndexes.Count);
+            int temp = SpawnIndexes[i];
+
+            SpawnIndexes[i] = SpawnIndexes[r];
+            SpawnIndexes[r] = temp;
+        }
+    }
+           
 }

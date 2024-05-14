@@ -20,26 +20,12 @@ public class Asteroid : MonoBehaviour
     float CurrentSpeed = 0.0f;
     float DeltaRotation = 0.0f;
 
-    private void Start()
+    public void StartPooledObject(float minX, float maxX)
     {
-        StartPooledObject();
-    }
-
-    public void StartPooledObject()
-    {
-        MovementVector = new Vector3(Random.Range(-0.5f, 0.5f), -1.0f, 0.0f).normalized;
+        MovementVector = new Vector3(Random.Range(minX, maxX), -1.0f, 0.0f).normalized;
 
         CurrentSpeed = Random.Range(MinSpeed, MaxSpeed);
         DeltaRotation = Random.Range(MinRotationSpeed, MaxRotationSpeed);
-    }
-
-    private void OnEnable()
-    {
-        Manager = AsteroidPoolingManager.GetPoolingManager();
-        if (Manager)
-        {
-
-        }
     }
 
     private void FixedUpdate()
@@ -55,7 +41,6 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         PlayerController pc = other.transform.root.GetComponentInChildren<PlayerController>();
         if (pc)
         {

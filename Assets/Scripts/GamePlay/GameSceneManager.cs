@@ -1,30 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class GameSceneManager : MonoBehaviour
 {
     public enum EGameState { Intro, Playing, Outro, Ended, Dead }
+    [Header("Component References")]
     [SerializeField] GameObject Destination;
     [SerializeField] GameSceneUI mGameSceneUI;
-    EGameState mGameState = EGameState.Intro;
-    PlayerShip mPlayerShip;
-    PlayerController mPlayerController;
-    PlayerScore mPlayerScore;
+    [SerializeField] AsteroidPoolingManager mAsteroidPoolingManager;
+    [SerializeField] PlayerController mPlayerController;
+    [SerializeField] PlayerScore mPlayerScore;
+
+    [Header("Game Scene Manager")]
 
     public float mLevelTimer = 30.0f;
+    public float[] mLevelTimes = { 30.0f, 45.0f, 60.0f };
+    EGameState mGameState = EGameState.Intro;
 
-    private void Update()
+    [Header("Game Manager Events")]
+    [SerializeField] UnityEvent LevelOutroCompletedEvent;
+    [SerializeField] UnityEvent LevelIntroCompletedEvent;
+    [SerializeField] UnityEvent LevelStartedPlayingEvent;
+    [SerializeField] UnityEvent LevelOutroStartedEvent;
+    [SerializeField] UnityEvent LevelEndedEvent;
+
+    private void Start()
+    {
+        mPlayerController.PlayerDiedEvent.AddListener(OnPlayerDied);
+    }
+
+    private void FixedUpdate()
     {
         if (mGameState == EGameState.Playing)
         {
-            mLevelTimer -= Time.deltaTime;
+            mLevelTimer -= Time.fixedDeltaTime;
 
             if (mLevelTimer <= 0.0f)
             {
                 EndGame();
+            }
+        }
+        else if (mGameState == EGameState.Outro)
+        {
+            if (!mAsteroidPoolingManager || (mAsteroidPoolingManager && mAsteroidPoolingManager.GetNumActiveAsteroids() <= 0))
+            {
+                mPlayerController.LevelOver();
+                mPlayerScore.bUpdateScore = false;
+                LevelOutroCompletedEvent.Invoke();
+                mGameState = EGameState.Ended;
             }
         }
     }
@@ -32,22 +59,16 @@ public class GameSceneManager : MonoBehaviour
     void EndGame()
     {
         mGameState = EGameState.Outro;
-        mPlayerController.LevelOver();
-        mPlayerScore.bUpdateScore = false;
 
         Destination.GetComponent<SimpleSpriteMover>().enabled = true;
-    }
-
-    public void SetActivePlayer(PlayerShip ship, PlayerController controller, PlayerScore score)
-    {
-        mPlayerShip = ship;
-        mPlayerController = controller;
-        mPlayerScore = score;
     }
 
     public void IntroOver()
     {
         mGameState = EGameState.Playing;
+        mLevelTimer = mLevelTimes[GameData.GetLevelDifficulty()];
+
+        LevelIntroCompletedEvent.Invoke();
     }
 
     public void EndLevel()
@@ -92,18 +113,20 @@ public class GameSceneManager : MonoBehaviour
         {
             mPlayerController.LevelOver();
         }
-    }
 
-    public void OnPlayerTakenHit(int RemainingLives)
-    {
         if (mGameSceneUI)
         {
-            mGameSceneUI.PlayerLivesChanged();
+            mGameSceneUI.OnGameOver();
         }
+    }
 
-        if (RemainingLives < 0)
-        {
-            GameOver();
-        }
+    public EGameState GetLevelGameState()
+    {
+        return mGameState;
+    }
+
+    private void OnPlayerDied()
+    {
+        GameOver();
     }
 }

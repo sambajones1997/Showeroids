@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,22 +25,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float deccelerationMultiplier = 2.0f;
     [SerializeField] float speedSnap = 0.5f;
 
-    protected bool bIsInputEnabled = true;
+    [SerializeField] protected bool bIsInputEnabled = true;
     protected bool bCanTakeDamage = true;
 
     [Header("Component References")]
     [SerializeField] PlayerScore mPlayerScore;
     [SerializeField] PlayerShip mPlayerShip;
-    [SerializeField] GameSceneManager mGameSceneManager;
+
     [SerializeField] AudioSource mAudioSource;
 
-    private void OnEnable()
-    {
-        mPlayerScore.enabled = true;
-        mPlayerScore.bUpdateScore = true;
-        mGameSceneManager.IntroOver();
-        mGameSceneManager.SetActivePlayer(mPlayerShip, this, mPlayerScore);
-    }
+    [Header("Unity Events")]
+    [SerializeField] public UnityEvent PlayerDiedEvent;
+    [SerializeField] public UnityEvent PlayerTakenHitEvent;
 
     // Update is called once per frame
     void Update()
@@ -65,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!bCanTakeDamage)
+        if (!bCanTakeDamage && mLives > 0)
         {
             DamageInvincibilityTimer -= Time.fixedDeltaTime;
 
@@ -80,6 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!bIsInputEnabled)
         {
+            horizontalInput = 0.0f;
             return;
         }
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -116,12 +114,27 @@ public class PlayerController : MonoBehaviour
     public void SetInputEnabled(bool InputEnabled = true)
     {
         bIsInputEnabled = InputEnabled;
+
+        mPlayerScore.enabled = true;
+        mPlayerScore.bUpdateScore = true;
     }
 
     public void LevelOver()
     {
-        GetComponent<SimpleSpriteMover>().enabled = true;
+        SimpleSpriteMover LevelOverSpriteMover = GetComponent<SimpleSpriteMover>();
+        if (LevelOverSpriteMover)
+        {
+            LevelOverSpriteMover.enabled = true;
+        }
         SetInputEnabled(false);
+
+        bCanTakeDamage = false;
+
+        Collider SpriteCollider = GetComponentInChildren<Collider>();
+        if (SpriteCollider)
+        {
+            SpriteCollider.enabled = false;
+        }
     }
 
     public void TakeHit()
@@ -132,12 +145,21 @@ public class PlayerController : MonoBehaviour
         }
 
         mLives--;
+        DamageInvincibilityTimer = DamageInvincibility;
+        bCanTakeDamage = false;
+
         if (mAudioSource)
         {
             mAudioSource.Play();
-            DamageInvincibilityTimer = DamageInvincibility;
-            bCanTakeDamage = false;
         }
+
+        if (mLives <= 0)
+        {
+            PlayerDiedEvent.Invoke();
+            DamageInvincibility = float.MaxValue;
+        }
+
+        PlayerTakenHitEvent.Invoke();
     }
 
     public int GetCurrentLives()

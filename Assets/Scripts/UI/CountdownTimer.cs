@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] float m_timeBeforeTimer = 1.0f;
 
     [Header("Post Countdown Behaviour")]
-    [SerializeField] List<MonoBehaviour> mComponentsToActivate = new List<MonoBehaviour>();
+    [SerializeField] public UnityEvent CountdownCompleted = new UnityEvent();
 
     float m_Countdown = 3.5f;
     int m_Time = 3;
@@ -40,18 +39,14 @@ public class CountdownTimer : MonoBehaviour
         {
             m_TimerText.text = "GO!";
             if (m_Countdown <= 0.0f)
-            {
-                foreach (MonoBehaviour comp in mComponentsToActivate)
-                {
-                    if (comp)
-                    {
-                        comp.enabled = true;
-                    }
-                }
+            {                
+                CountdownCompleted.Invoke();
 
                 Destroy(m_TimerText.gameObject);
                 Destroy(this);
             }
         }
     }
+
+ 
 }
