@@ -121,11 +121,15 @@ public class PlayerController : MonoBehaviour
 
     public void LevelOver()
     {
-        SimpleSpriteMover LevelOverSpriteMover = GetComponent<SimpleSpriteMover>();
-        if (LevelOverSpriteMover)
+        if (mLives > 0)
         {
-            LevelOverSpriteMover.enabled = true;
+            SimpleSpriteMover LevelOverSpriteMover = GetComponent<SimpleSpriteMover>();
+            if (LevelOverSpriteMover)
+            {
+                LevelOverSpriteMover.enabled = true;
+            }
         }
+
         SetInputEnabled(false);
 
         bCanTakeDamage = false;

@@ -48,8 +48,6 @@ public class GameSceneManager : MonoBehaviour
         {
             if (!mAsteroidPoolingManager || (mAsteroidPoolingManager && mAsteroidPoolingManager.GetNumActiveAsteroids() <= 0))
             {
-                mPlayerController.LevelOver();
-                mPlayerScore.bUpdateScore = false;
                 LevelOutroCompletedEvent.Invoke();
                 mGameState = EGameState.Ended;
             }
@@ -57,6 +55,19 @@ public class GameSceneManager : MonoBehaviour
     }
 
     void EndGame()
+    {
+        mPlayerController.LevelOver();
+        mPlayerScore.bUpdateScore = false;
+
+        SimpleSpriteMover PlayerEndMover = mPlayerController.gameObject.GetComponentInChildren<SimpleSpriteMover>();
+
+        if (PlayerEndMover)
+        {
+            PlayerEndMover.SpriteMovementCompleted.AddListener(OutroOver);
+        }
+    }
+
+    void OutroOver()
     {
         mGameState = EGameState.Outro;
 
@@ -118,6 +129,13 @@ public class GameSceneManager : MonoBehaviour
         {
             mGameSceneUI.OnGameOver();
         }
+
+        if (mPlayerScore)
+        {
+            mPlayerScore.bUpdateScore = false;
+        }
+
+        mGameState = EGameState.Dead; 
     }
 
     public EGameState GetLevelGameState()

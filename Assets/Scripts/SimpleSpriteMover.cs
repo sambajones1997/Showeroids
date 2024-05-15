@@ -22,7 +22,7 @@ public class SimpleSpriteMover : MonoBehaviour
     [SerializeField] List<GameObject> mObjectsToActivate = new List<GameObject>();
     [SerializeField] List<MonoBehaviour> mComponentsToDeActivate = new List<MonoBehaviour>();
     [SerializeField] List<GameObject> mObjectsToDeActivate = new List<GameObject>();
-    [SerializeField] UnityEvent SpriteMovementCompleted = new UnityEvent();
+    [SerializeField] public UnityEvent SpriteMovementCompleted = new UnityEvent();
 
     float mMoveTimeRemaining = 0.0f;
 
