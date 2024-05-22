@@ -28,10 +28,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected bool bIsInputEnabled = true;
     protected bool bCanTakeDamage = true;
 
+    [Header("Player Prefabs")]
+    [SerializeField] GameObject mExplosionVFX;
+
     [Header("Component References")]
     [SerializeField] PlayerScore mPlayerScore;
     [SerializeField] PlayerShip mPlayerShip;
-
     [SerializeField] AudioSource mAudioSource;
 
     [Header("Unity Events")]
@@ -161,6 +163,11 @@ public class PlayerController : MonoBehaviour
         {
             PlayerDiedEvent.Invoke();
             DamageInvincibility = float.MaxValue;
+            mPlayerShip.DisableRendering(); // Set invisible
+            if (mExplosionVFX)
+            {
+                Instantiate(mExplosionVFX, transform);
+            }
         }
 
         PlayerTakenHitEvent.Invoke();

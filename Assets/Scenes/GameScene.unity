@@ -3864,6 +3864,7 @@ MonoBehaviour:
   deccelerationMultiplier: 2
   speedSnap: 0.5
   bIsInputEnabled: 0
+  mExplosionVFX: {fileID: 7775028302249624509, guid: 28b1eec78049e944ea9b82eb71dd825d, type: 3}
   mPlayerScore: {fileID: 1724043916}
   mPlayerShip: {fileID: 0}
   mAudioSource: {fileID: 0}

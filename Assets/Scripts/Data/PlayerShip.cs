@@ -66,4 +66,50 @@ public class PlayerShip : MonoBehaviour
         }
         return null;
     }
+
+    public void DisableRendering()
+    {
+        if (mShipBodySprite)
+        {
+            mShipBodySprite.enabled = false;
+        }
+
+        if (mShipTrim1Sprite)
+        {
+            mShipTrim1Sprite.enabled = false;
+        }
+
+        if (mShipTrim2Sprite)
+        {
+            mShipTrim2Sprite.enabled = false;
+        }
+
+        if (mShipDetailsSprite)
+        {
+            mShipDetailsSprite.enabled = false;
+        }
+    }
+
+    public void EnableRendering()
+    {
+        if (mShipBodySprite)
+        {
+            mShipBodySprite.enabled = true;
+        }
+
+        if (mShipTrim1Sprite)
+        {
+            mShipTrim1Sprite.enabled = true;
+        }
+
+        if (mShipTrim2Sprite)
+        {
+            mShipTrim2Sprite.enabled = true;
+        }
+
+        if (mShipDetailsSprite)
+        {
+            mShipDetailsSprite.enabled = true;
+        }
+    }
 }
