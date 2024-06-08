@@ -41,37 +41,36 @@ public class GameSceneManager : MonoBehaviour
 
             if (mLevelTimer <= 0.0f)
             {
-                EndGame();
+                mGameState = EGameState.Outro;
+
+                Destination.GetComponent<SimpleSpriteMover>().enabled = true;
+                mPlayerScore.bUpdateScore = false;
             }
         }
         else if (mGameState == EGameState.Outro)
         {
             if (!mAsteroidPoolingManager || (mAsteroidPoolingManager && mAsteroidPoolingManager.GetNumActiveAsteroids() <= 0))
             {
-                LevelOutroCompletedEvent.Invoke();
-                mGameState = EGameState.Ended;
+                mPlayerController.LevelOver();
+                SimpleSpriteMover PlayerEndMover = mPlayerController.gameObject.GetComponentInChildren<SimpleSpriteMover>();
+
+                if (PlayerEndMover)
+                {
+                    PlayerEndMover.SpriteMovementCompleted.AddListener(OutroOver);
+                }
             }
         }
     }
 
     void EndGame()
     {
-        mPlayerController.LevelOver();
-        mPlayerScore.bUpdateScore = false;
-
-        SimpleSpriteMover PlayerEndMover = mPlayerController.gameObject.GetComponentInChildren<SimpleSpriteMover>();
-
-        if (PlayerEndMover)
-        {
-            PlayerEndMover.SpriteMovementCompleted.AddListener(OutroOver);
-        }
+        LevelOutroCompletedEvent.Invoke();
+        mGameState = EGameState.Ended;
     }
 
     void OutroOver()
     {
-        mGameState = EGameState.Outro;
-
-        Destination.GetComponent<SimpleSpriteMover>().enabled = true;
+        EndGame();
     }
 
     public void IntroOver()

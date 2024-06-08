@@ -30,7 +30,13 @@ public class SimpleSpriteMover : MonoBehaviour
     private void Start()
     {
         mMoveTimeRemaining = mMoveTimer;
+
+        if (mMoveTarget)
+        {
+            mSpriteSpeed = Vector3.Distance(transform.position, mMoveTarget.transform.position) / mMoveTimer;
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
