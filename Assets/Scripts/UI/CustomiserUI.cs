@@ -158,7 +158,7 @@ public class CustomiserUI : MonoBehaviour
         }
 
         if (mShipTrim1SpriteRenderer && mShipList.Count > mShipIndex && mColours.Count > mColourIndex)
-        {
+        { 
             mShipTrim1SpriteRenderer.material.SetColor(mTintColourName, mColours[mTrim1ColourIndex]);
         }
 

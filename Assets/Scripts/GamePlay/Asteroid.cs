@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct DifficultyBasedSpeed
+{
+    public float MinSpeed;
+    public float MaxSpeed;
+}
+
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] Rigidbody RigidBody;
@@ -9,8 +16,7 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] Vector3 MovementVector = Vector3.zero;
     [Header("Speed")]
-    [SerializeField] float MinSpeed = 1.0f;
-    [SerializeField] float MaxSpeed = 1.0f;
+    [SerializeField] List<DifficultyBasedSpeed> DifficultyBasedSpeeds = new List<DifficultyBasedSpeed>();
     [Header("Rotation")]
     [SerializeField] float MinRotationSpeed = 15.0f;
     [SerializeField] float MaxRotationSpeed = 45.0f;
@@ -24,8 +30,11 @@ public class Asteroid : MonoBehaviour
     {
         MovementVector = new Vector3(Random.Range(minX, maxX), -1.0f, 0.0f).normalized;
 
-        CurrentSpeed = Random.Range(MinSpeed, MaxSpeed);
+        CurrentSpeed = Random.Range(DifficultyBasedSpeeds[GameData.GetLevelDifficulty()].MinSpeed, DifficultyBasedSpeeds[GameData.GetLevelDifficulty()].MaxSpeed);
         DeltaRotation = Random.Range(MinRotationSpeed, MaxRotationSpeed);
+
+        // Random Rotation on start
+        transform.Rotate(Vector3.back * Random.Range(0.0f, 360.0f));
     }
 
     private void FixedUpdate()

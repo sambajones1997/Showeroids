@@ -10,7 +10,8 @@ public class MainMenuUI : MonoBehaviour
 
     public void Start()
     {
-        
+        PlayerPrefs.SetInt("CurrentSessionScore", 0);
+        PlayerPrefs.Save();
     }
 
     public void OnPlayPressed()

@@ -981,6 +981,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 777261833}
     m_Modifications:
     - target: {fileID: 1137270605250236605, guid: 57cdc56cdf2c62c49b3a88016758c023, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137270605250236605, guid: 57cdc56cdf2c62c49b3a88016758c023, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137270605250236605, guid: 57cdc56cdf2c62c49b3a88016758c023, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137270605250236605, guid: 57cdc56cdf2c62c49b3a88016758c023, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1568,9 +1580,15 @@ MonoBehaviour:
   mSpriteSpeed: 0.5
   mMoveTimer: 1
   mMoveDirection: {x: 0, y: 1, z: 0}
+  mMoveTarget: {fileID: 0}
   mMoveBehaviour: 1
   mComponentsToActivate: []
+  mObjectsToActivate: []
   mComponentsToDeActivate: []
+  mObjectsToDeActivate: []
+  SpriteMovementCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &817346482
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,15 +14,27 @@ public class PlayerScore : MonoBehaviour
 
     public float m_timeSinceLastHit = 0.0f;
 
-    public bool bUpdateScore = true;
+    public bool bUpdateScore = false;
 
     public List<KeyValuePair<float, float>> m_MultiplierTimes = new List<KeyValuePair<float, float>>();
+
+    private string CurrentSessionScore = "CurrentSessionScore";
 
     private void Start()
     {
         StartCoroutine("UpdateTimeSinceHit");
 
         m_DifficultyMultiplier = GameData.GetLevelDifficulty() + 1.0f;
+
+        if (GameData.GetLevelDifficulty() <= 0 && GameData.GetLevelIndex() <= 0)
+        {
+            PlayerPrefs.SetInt(CurrentSessionScore, 0);
+            m_Score = 0;
+        }
+        else
+        {
+            m_Score = PlayerPrefs.GetInt(CurrentSessionScore);
+        }
     }
 
     // Update is called once per frame
@@ -58,6 +70,23 @@ public class PlayerScore : MonoBehaviour
     public float GetCurrentScore()
     {
         return m_CurrentScore;
+    }
+
+    public void SetScoreEnabled(bool bEnabled)
+    {
+        bUpdateScore = bEnabled;
+    }
+
+    public void SaveOutCurrentScore()
+    {
+        PlayerPrefs.SetInt(CurrentSessionScore, m_CurrentScore);
+        PlayerPrefs.Save();
+    }
+
+    public void RevertCurrentSessionScore()
+    {
+        PlayerPrefs.SetInt(CurrentSessionScore, 0);
+        PlayerPrefs.Save();
     }
 
     IEnumerator UpdateTimeSinceHit()

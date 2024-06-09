@@ -49,8 +49,13 @@ MonoBehaviour:
   RigidBody: {fileID: 4747538127724058586}
   AsteroidSprite: {fileID: 9090470125352722850}
   MovementVector: {x: 0, y: 0, z: 0}
-  MinSpeed: 2
-  MaxSpeed: 2
+  DifficultyBasedSpeeds:
+  - MinSpeed: 1
+    MaxSpeed: 1.25
+  - MinSpeed: 1
+    MaxSpeed: 1.75
+  - MinSpeed: 1.5
+    MaxSpeed: 2.5
   MinRotationSpeed: 15
   MaxRotationSpeed: 45
 --- !u!54 &4747538127724058586

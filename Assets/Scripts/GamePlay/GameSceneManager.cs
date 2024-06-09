@@ -44,7 +44,6 @@ public class GameSceneManager : MonoBehaviour
                 mGameState = EGameState.Outro;
 
                 Destination.GetComponent<SimpleSpriteMover>().enabled = true;
-                mPlayerScore.bUpdateScore = false;
             }
         }
         else if (mGameState == EGameState.Outro)
@@ -90,7 +89,7 @@ public class GameSceneManager : MonoBehaviour
             if (destinationSelector)
             {
                 int numDestinations = destinationSelector.GetNumDestinations();
-                nextLevelIndex = (GameData.GetLevelIndex() + 1) > numDestinations - 1 ? GameData.GetLevelIndex() + 1 : 0;
+                nextLevelIndex = (GameData.GetLevelIndex() + 1) > numDestinations - 1 ? 0 : GameData.GetLevelIndex() + 1;
 
                 if (nextLevelIndex == 0)
                 {
@@ -131,7 +130,7 @@ public class GameSceneManager : MonoBehaviour
 
         if (mPlayerScore)
         {
-            mPlayerScore.bUpdateScore = false;
+            mPlayerScore.SetScoreEnabled(false);
         }
 
         mGameState = EGameState.Dead; 

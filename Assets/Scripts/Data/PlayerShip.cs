@@ -10,10 +10,79 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] SpriteRenderer mShipTrim1Sprite;
     [SerializeField] SpriteRenderer mShipTrim2Sprite;
     [SerializeField] SpriteRenderer mShipDetailsSprite;
+    [SerializeField] SpriteRenderer mShipThrustSprite;
+
+    [SerializeField] SpriteRenderer mShipDamagedSprite;
 
     [SerializeField] GameObject mBodyColourLocation;
     [SerializeField] GameObject mTrim1ColourLocation;
     [SerializeField] GameObject mTrim2ColourLocation;
+
+    [SerializeField] float ThrustMinScale = 0.75f;
+    [SerializeField] float ThrustMaxScale = 1.0f;
+
+    public SpriteRenderer GetThrustSprite()
+    {
+        return mShipThrustSprite;
+    }
+
+    public void EnableThrustSprite(bool bEnable)
+    {
+        GetThrustSprite().enabled = bEnable;
+
+        if (bEnable)
+        {
+            StartCoroutine("ThrustUpdate");
+        }
+        else
+        {
+            StopCoroutine("ThrustUpdate");
+        }
+    }
+
+    public void EnableAllSprites(bool bEnabled, bool bEnableDamaged = false)
+    {
+        if (mShipBodySprite)
+        {
+            mShipBodySprite.enabled = bEnabled;
+        }
+
+        if (mShipTrim1Sprite)
+        {
+            mShipTrim1Sprite.enabled = bEnabled;
+        }
+
+        if (mShipTrim2Sprite)
+        {
+            mShipTrim2Sprite.enabled = bEnabled;
+        }
+
+        if (mShipDetailsSprite)
+        {
+            mShipDetailsSprite.enabled = bEnabled;
+        }
+
+        if (mShipThrustSprite)
+        {
+            mShipThrustSprite.enabled = bEnabled;
+        }
+
+        EnableDamageSprite(bEnabled && bEnableDamaged);
+    }
+
+    public void EnableDamageSprite(bool bEnabled)
+    {
+        mShipDamagedSprite.enabled = bEnabled;
+    }
+
+    private IEnumerator ThrustUpdate()
+    {
+        while (mShipThrustSprite && mShipThrustSprite.enabled)
+        {
+            mShipThrustSprite.transform.localScale = new Vector3(1.0f, Random.Range(ThrustMinScale, ThrustMaxScale), 1.0f);
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
 
     public SpriteRenderer GetShipBodySprite()
     {
@@ -69,47 +138,11 @@ public class PlayerShip : MonoBehaviour
 
     public void DisableRendering()
     {
-        if (mShipBodySprite)
-        {
-            mShipBodySprite.enabled = false;
-        }
-
-        if (mShipTrim1Sprite)
-        {
-            mShipTrim1Sprite.enabled = false;
-        }
-
-        if (mShipTrim2Sprite)
-        {
-            mShipTrim2Sprite.enabled = false;
-        }
-
-        if (mShipDetailsSprite)
-        {
-            mShipDetailsSprite.enabled = false;
-        }
+        EnableAllSprites(false);
     }
 
     public void EnableRendering()
     {
-        if (mShipBodySprite)
-        {
-            mShipBodySprite.enabled = true;
-        }
-
-        if (mShipTrim1Sprite)
-        {
-            mShipTrim1Sprite.enabled = true;
-        }
-
-        if (mShipTrim2Sprite)
-        {
-            mShipTrim2Sprite.enabled = true;
-        }
-
-        if (mShipDetailsSprite)
-        {
-            mShipDetailsSprite.enabled = true;
-        }
+        EnableAllSprites(true);
     }
 }

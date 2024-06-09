@@ -64,14 +64,34 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!bCanTakeDamage && mLives > 0)
+        if (!bIsInputEnabled)
+        {
+            return;
+        }
+
+        if (!bCanTakeDamage && mLives > 0 && DamageInvincibilityTimer > 0.0f)
         {
             DamageInvincibilityTimer -= Time.fixedDeltaTime;
 
             if (DamageInvincibilityTimer < 0.0f)
             {
                 bCanTakeDamage = true;
+
+                if (mPlayerShip)
+                {
+                    mPlayerShip.EnableAllSprites(!mPlayerShip.GetShipBodySprite().enabled, false);
+                    mPlayerShip.EnableDamageSprite(false);
+                }
+                StopCoroutine("ShipHitEffects");
             }
+        }
+    }
+
+    public void EnableThrusterSprite()
+    {
+        if (mPlayerShip)
+        {
+            mPlayerShip.EnableThrustSprite(true);
         }
     }
 
@@ -117,8 +137,15 @@ public class PlayerController : MonoBehaviour
     {
         bIsInputEnabled = InputEnabled;
 
-        mPlayerScore.enabled = true;
-        mPlayerScore.bUpdateScore = true;
+        if (InputEnabled)
+        {
+            mPlayerScore.enabled = true;
+            mPlayerScore.SetScoreEnabled(true);
+        }
+        else
+        {
+            mPlayerScore.SetScoreEnabled(false);
+        }
     }
 
     public void LevelOver()
@@ -135,6 +162,12 @@ public class PlayerController : MonoBehaviour
         SetInputEnabled(false);
 
         bCanTakeDamage = false;
+
+        if (mPlayerScore)
+        {
+            mPlayerScore.SetScoreEnabled(false);
+            mPlayerScore.SaveOutCurrentScore();
+        }
 
         Collider SpriteCollider = GetComponentInChildren<Collider>();
         if (SpriteCollider)
@@ -169,6 +202,10 @@ public class PlayerController : MonoBehaviour
                 Instantiate(mExplosionVFX, transform);
             }
         }
+        else
+        {
+            StartCoroutine("ShipHitEffects");
+        }
 
         PlayerTakenHitEvent.Invoke();
     }
@@ -186,5 +223,18 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerShip(PlayerShip ship)
     {
         mPlayerShip = ship;
+    }
+
+    IEnumerator ShipHitEffects()
+    {
+        while (DamageInvincibilityTimer > 0.0f)
+        {
+            if (mPlayerShip)
+            {
+                mPlayerShip.EnableDamageSprite(true);
+                mPlayerShip.EnableAllSprites(!mPlayerShip.GetShipBodySprite().enabled, true);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }      
     }
 }
