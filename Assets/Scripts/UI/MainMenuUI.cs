@@ -33,9 +33,11 @@ public class MainMenuUI : MonoBehaviour
         mLeaderBoardCanvas.SetActive(true);
     }
 
-    public void OnHelpPressed()
+    public void OnLeaderboardClosePressed()
     {
-
+        mSettingsCanvas.SetActive(false);
+        mMainMenuCanvas.SetActive(true);
+        mLeaderBoardCanvas.SetActive(false);
     }
 
     public void OnQuitPressed()

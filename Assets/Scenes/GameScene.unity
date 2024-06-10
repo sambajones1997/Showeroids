@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.5
+  minX: -0.75
   maxX: 0.5
 --- !u!1 &513638154
 GameObject:
@@ -1079,6 +1079,8 @@ MonoBehaviour:
   NumActiveAsteroids: 0
   AsteroidsToSpawn:
   - {fileID: 7407759597754702966, guid: 71826d89d2fd0d744a72c296d2c742c8, type: 3}
+  - {fileID: 2478700669049266132, guid: 3cb5ff1392eda664097f6bb4a54b7b31, type: 3}
+  - {fileID: 4300951298536514582, guid: 9a9fd025b207102429942ee510f542f9, type: 3}
   ExplosionVFXToSpawn: {fileID: 7775028302249624509, guid: 28b1eec78049e944ea9b82eb71dd825d, type: 3}
 --- !u!4 &518000026
 Transform:
@@ -3553,7 +3555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minX: -0.5
-  maxX: 0.5
+  maxX: 0.75
 --- !u!1 &1569336195
 GameObject:
   m_ObjectHideFlags: 0

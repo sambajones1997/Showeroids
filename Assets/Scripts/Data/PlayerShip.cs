@@ -12,7 +12,9 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] SpriteRenderer mShipDetailsSprite;
     [SerializeField] SpriteRenderer mShipThrustSprite;
 
+    [Header("Extra Sprites")]
     [SerializeField] SpriteRenderer mShipDamagedSprite;
+    [SerializeField] SpriteRenderer mShipLockedSprite;
 
     [SerializeField] GameObject mBodyColourLocation;
     [SerializeField] GameObject mTrim1ColourLocation;
@@ -80,8 +82,21 @@ public class PlayerShip : MonoBehaviour
         while (mShipThrustSprite && mShipThrustSprite.enabled)
         {
             mShipThrustSprite.transform.localScale = new Vector3(1.0f, Random.Range(ThrustMinScale, ThrustMaxScale), 1.0f);
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void EnableLockedSprite(bool bEnable)
+    {
+        if (mShipLockedSprite)
+        {
+            mShipLockedSprite.enabled = bEnable;
+        }
+    }
+
+    public SpriteRenderer GetLockedShipSprite()
+    {
+        return mShipLockedSprite;
     }
 
     public SpriteRenderer GetShipBodySprite()

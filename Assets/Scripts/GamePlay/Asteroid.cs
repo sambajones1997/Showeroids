@@ -19,7 +19,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] List<DifficultyBasedSpeed> DifficultyBasedSpeeds = new List<DifficultyBasedSpeed>();
     [Header("Rotation")]
     [SerializeField] float MinRotationSpeed = 15.0f;
-    [SerializeField] float MaxRotationSpeed = 45.0f;
+    [SerializeField] float MaxRotationSpeed = 75.0f;
 
     AsteroidPoolingManager Manager;
 

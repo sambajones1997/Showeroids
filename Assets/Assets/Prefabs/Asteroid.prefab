@@ -57,7 +57,7 @@ MonoBehaviour:
   - MinSpeed: 1.5
     MaxSpeed: 2.5
   MinRotationSpeed: 15
-  MaxRotationSpeed: 45
+  MaxRotationSpeed: 75
 --- !u!54 &4747538127724058586
 Rigidbody:
   m_ObjectHideFlags: 0

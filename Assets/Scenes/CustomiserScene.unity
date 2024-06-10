@@ -1586,6 +1586,9 @@ MonoBehaviour:
   mObjectsToActivate: []
   mComponentsToDeActivate: []
   mObjectsToDeActivate: []
+  SpriteMovementStarted:
+    m_PersistentCalls:
+      m_Calls: []
   SpriteMovementCompleted:
     m_PersistentCalls:
       m_Calls: []

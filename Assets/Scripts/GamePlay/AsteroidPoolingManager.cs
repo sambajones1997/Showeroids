@@ -31,7 +31,8 @@ public class AsteroidPoolingManager : MonoBehaviour
             return asteroid;
         }
 
-        asteroid = Instantiate(AsteroidsToSpawn[Random.Range(0, Asteroids.Count)]);
+        int Rand = Random.Range(0, AsteroidsToSpawn.Count);
+        asteroid = Instantiate(AsteroidsToSpawn[Rand]);
         return asteroid;
     }
 

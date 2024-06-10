@@ -542,6 +542,7 @@ MonoBehaviour:
   mShipDetailsSprite: {fileID: 7501620092591043097}
   mShipThrustSprite: {fileID: 3371368395875725816}
   mShipDamagedSprite: {fileID: 1573208899962560463}
+  mShipLockedSprite: {fileID: 0}
   mBodyColourLocation: {fileID: 7949168262295264136}
   mTrim1ColourLocation: {fileID: 2820643815480821377}
   mTrim2ColourLocation: {fileID: 4642406277516980737}

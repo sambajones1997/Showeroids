@@ -5118,6 +5118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeaderBoardCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4991196954690699485, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8782828986250390585, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5197,6 +5201,34 @@ PrefabInstance:
     - target: {fileID: 8782828986250390585, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 114576159}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLeaderboardClosePressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179827286277194254, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
