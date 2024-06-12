@@ -20,4 +20,9 @@ public class GameOverMenu : MonoBehaviour
     {
         FinalScoreText.text = FinalScore.ToString();
     }
+
+    public void SaveOutFinalScore()
+    {
+        File
+    }
 }
