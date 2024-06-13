@@ -101,6 +101,9 @@ public class GameSceneManager : MonoBehaviour
         GameData.SetCurrentScore(mPlayerScore.GetCurrentScore());
         GameData.GameLevelData.LevelIndex = nextLevelIndex;
 
+        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, (int)mPlayerScore.GetCurrentScore());
+        PlayerPrefs.Save();
+
         AdvanceToNextLevel();
     }
 
@@ -114,6 +117,18 @@ public class GameSceneManager : MonoBehaviour
     {
         AsyncOperation SceneLoader = SceneManager.LoadSceneAsync(0);
         SceneLoader.allowSceneActivation = true;
+    }
+
+    public void Retry()
+    {
+        GameData.SetCurrentScore(0);
+        GameData.GameLevelData.LevelIndex = 0;
+        GameData.GameLevelData.DifficultyLevel = 0;
+
+        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, 0);
+        PlayerPrefs.Save();
+
+        AdvanceToNextLevel();
     }
 
     public void GameOver()

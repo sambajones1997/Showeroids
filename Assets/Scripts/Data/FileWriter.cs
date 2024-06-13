@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,7 @@ public static class ShoweroidsFileSystem
     static string DirectoryPath = "/Data";
     static string ShipDataLocation = "/ShipData.txt";
     static string LeaderBoardLocation = "/Leaderboard.txt";
+
     public static void WriteShipDataFile(PlayerData shipPlayerData)
     {
         string path = Application.persistentDataPath + DirectoryPath;
@@ -71,7 +73,7 @@ public static class ShoweroidsFileSystem
 
         int maxLeaderboardEntries = 10;
 
-        StreamWriter writer = File.CreateText(path + ShipDataLocation);
+        StreamWriter writer = File.CreateText(path + LeaderBoardLocation);
         foreach (SLeaderBoardUserData userData in leaderBoardUserData)
         {
             writer.WriteLine(userData.mName + "," + userData.mScore);
@@ -108,8 +110,8 @@ public static class ShoweroidsFileSystem
                 if (leaderBoardDataString.Length == 2)
                 {
                     int leaderBoardScore = 0;
-                    int.TryParse(leaderBoardDataString[0], out leaderBoardScore);
-                    string leaderBoardName = leaderBoardDataString[1];
+                    int.TryParse(leaderBoardDataString[1], out leaderBoardScore);
+                    string leaderBoardName = leaderBoardDataString[0];
 
                     dataList.Add(new SLeaderBoardUserData(leaderBoardName, leaderBoardScore));
                 }
@@ -123,5 +125,41 @@ public static class ShoweroidsFileSystem
         leaderBoardUserData = dataList;
     }
 
-    public static void 
+    public static List<SLeaderBoardUserData> AddLeaderBoardEntry(string playerName, int score)
+    {
+        List<SLeaderBoardUserData> leaderBoard = new List<SLeaderBoardUserData>();
+
+        ReadLeaderBoard(out leaderBoard);
+        bool bInserted = false;
+
+        for (int index = 0; index < leaderBoard.Count; index++)
+        {
+            if (!bInserted && leaderBoard[index].mScore < score)
+            {
+                leaderBoard.Insert(index, new SLeaderBoardUserData(playerName, score));
+                bInserted = true;
+                break;
+            }
+        }
+
+        if (!bInserted && leaderBoard.Count < 10)
+        {
+            leaderBoard.Add(new SLeaderBoardUserData(playerName, score));
+        }
+
+        if (leaderBoard.Count > 10)
+        {
+            int numToRemove = leaderBoard.Count - 10;
+            if (numToRemove > 0)
+            {
+                leaderBoard.RemoveRange(10, numToRemove);
+            }
+        }
+
+        WriteLeaderBoard(ref leaderBoard);
+
+        return leaderBoard;
+    }
+
+
 }

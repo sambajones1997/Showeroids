@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
+    [SerializeField] Button AcceptButton;
     [SerializeField] TMPro.TextMeshProUGUI FinalScoreText;
+    [SerializeField] TMPro.TMP_InputField NameInputField;
     [SerializeField] PlayerScore PlayerScoreComp;
 
     public void Start()
@@ -23,6 +25,17 @@ public class GameOverMenu : MonoBehaviour
 
     public void SaveOutFinalScore()
     {
-        File
+        if (NameInputField && PlayerScoreComp)
+        {
+            ShoweroidsFileSystem.AddLeaderBoardEntry(NameInputField.text, (int)PlayerScoreComp.GetCurrentScore());
+        }
+    }
+
+    public void EnableDisableAcceptButton()
+    {
+        if (AcceptButton)
+        {
+            AcceptButton.interactable = NameInputField.text.Length > 0;
+        }
     }
 }

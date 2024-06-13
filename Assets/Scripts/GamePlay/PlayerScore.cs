@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class PlayerScoreStatics
+{
+    public static string CurrentSessionScore = "CurrentSessionScore";
+}
+
 public class PlayerScore : MonoBehaviour
 {
     public int m_CurrentScore;
@@ -18,8 +23,6 @@ public class PlayerScore : MonoBehaviour
 
     public List<KeyValuePair<float, float>> m_MultiplierTimes = new List<KeyValuePair<float, float>>();
 
-    private string CurrentSessionScore = "CurrentSessionScore";
-
     private void Start()
     {
         StartCoroutine("UpdateTimeSinceHit");
@@ -28,12 +31,13 @@ public class PlayerScore : MonoBehaviour
 
         if (GameData.GetLevelDifficulty() <= 0 && GameData.GetLevelIndex() <= 0)
         {
-            PlayerPrefs.SetInt(CurrentSessionScore, 0);
+            PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, 0);
             m_Score = 0;
+            PlayerPrefs.Save();
         }
         else
         {
-            m_Score = PlayerPrefs.GetInt(CurrentSessionScore);
+            m_Score = PlayerPrefs.GetInt(PlayerScoreStatics.CurrentSessionScore);
         }
     }
 
@@ -79,13 +83,13 @@ public class PlayerScore : MonoBehaviour
 
     public void SaveOutCurrentScore()
     {
-        PlayerPrefs.SetInt(CurrentSessionScore, m_CurrentScore);
+        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, m_CurrentScore);
         PlayerPrefs.Save();
     }
 
     public void RevertCurrentSessionScore()
     {
-        PlayerPrefs.SetInt(CurrentSessionScore, 0);
+        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, 0);
         PlayerPrefs.Save();
     }
 
