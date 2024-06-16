@@ -14,7 +14,6 @@ public class PlayerShip : MonoBehaviour
 
     [Header("Extra Sprites")]
     [SerializeField] SpriteRenderer mShipDamagedSprite;
-    [SerializeField] SpriteRenderer mShipLockedSprite;
 
     [SerializeField] GameObject mBodyColourLocation;
     [SerializeField] GameObject mTrim1ColourLocation;
@@ -84,19 +83,6 @@ public class PlayerShip : MonoBehaviour
             mShipThrustSprite.transform.localScale = new Vector3(1.0f, Random.Range(ThrustMinScale, ThrustMaxScale), 1.0f);
             yield return new WaitForSeconds(0.1f);
         }
-    }
-
-    public void EnableLockedSprite(bool bEnable)
-    {
-        if (mShipLockedSprite)
-        {
-            mShipLockedSprite.enabled = bEnable;
-        }
-    }
-
-    public SpriteRenderer GetLockedShipSprite()
-    {
-        return mShipLockedSprite;
     }
 
     public SpriteRenderer GetShipBodySprite()

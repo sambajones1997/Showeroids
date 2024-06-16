@@ -21,9 +21,9 @@ public static class AudioManager
     public static void LoadUserSettings()
     {
         // Master Vol Saving
-        MasterVol = PlayerPrefs.GetFloat(MasterVolName);
-        MusicVol = PlayerPrefs.GetFloat(MusicVolName);
-        SFXVol = PlayerPrefs.GetFloat(SFXVolName);
+        MasterVol = PlayerPrefs.GetFloat(MasterVolName, 100.0f);
+        MusicVol = PlayerPrefs.GetFloat(MusicVolName, 100.0f);
+        SFXVol = PlayerPrefs.GetFloat(SFXVolName, 100.0f);
     }
 
     public static void SaveUserSettings()

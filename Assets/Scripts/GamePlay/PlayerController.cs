@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static PlayerController;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum EPlayerInputType { Touch, Tilt };
     [Header("Player Stats")]
     public int mMaxLives = 3;
     public int mLives = 3;
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] const float maxSpeed = 5.0f;
     [SerializeField] float speed = 0.0f;
     [SerializeField] float DamageInvincibility = 0.5f;
+    EPlayerInputType PlayerInputType;
 
     float horizontalInput = 0.0f;
 
@@ -39,6 +42,12 @@ public class PlayerController : MonoBehaviour
     [Header("Unity Events")]
     [SerializeField] public UnityEvent PlayerDiedEvent;
     [SerializeField] public UnityEvent PlayerTakenHitEvent;
+
+    private void Start()
+    {
+        PlayerInputType = (EPlayerInputType)(PlayerPrefs.GetInt(SettingsStrings.PlayerPrefsInputType));
+        mLives = Mathf.Clamp(PlayerPrefs.GetInt(SettingsStrings.PlayerLives, 3), 0, mMaxLives);
+    }
 
     // Update is called once per frame
     void Update()
@@ -75,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
             if (DamageInvincibilityTimer < 0.0f)
             {
+                StopCoroutine("ShipHitEffects");
                 bCanTakeDamage = true;
 
                 if (mPlayerShip)
@@ -82,7 +92,6 @@ public class PlayerController : MonoBehaviour
                     mPlayerShip.EnableAllSprites(!mPlayerShip.GetShipBodySprite().enabled, false);
                     mPlayerShip.EnableDamageSprite(false);
                 }
-                StopCoroutine("ShipHitEffects");
             }
         }
     }
@@ -102,10 +111,43 @@ public class PlayerController : MonoBehaviour
             horizontalInput = 0.0f;
             return;
         }
-#if UNITY_ANDROID && !UNITY_EDITOR
         // Cache input from Gyro or UI
-        horizontalInput = Mathf.Clamp(Input.gyro.attitude.eulerAngles.x, -1.0f, 1.0f);
-#else
+        horizontalInput = 0.0f;
+
+        switch (PlayerInputType)
+        {
+            case EPlayerInputType.Tilt:
+                if (Input.gyro.rotationRateUnbiased.y < 0.0f)
+                {
+                    horizontalInput = -1.0f;
+                }
+                else if (Input.gyro.rotationRateUnbiased.y > 0.0f)
+                {
+                    horizontalInput = 1.0f;
+                }
+                break;
+
+            case EPlayerInputType.Touch:
+                if (Input.touchCount > 0)
+                {
+                    Touch FrameTouch = Input.GetTouch(0);
+                    float fOffset = Screen.width * 0.1f;
+
+                    int HalfWidth = Screen.width / 2;
+
+                    if (FrameTouch.position.x > (HalfWidth + (int)(fOffset)))
+                    {
+                        horizontalInput = 1.0f;
+                    }
+                    else if (FrameTouch.position.x < (HalfWidth - (int)(fOffset)))
+                    {
+                        horizontalInput = -1.0f;
+                    }
+                }
+            break;
+        }
+
+#if UNITY_EDITOR_WIN
         horizontalInput = Input.GetAxisRaw("Horizontal");
 #endif //UNITY_ANDROID
     }
@@ -139,11 +181,13 @@ public class PlayerController : MonoBehaviour
 
         if (InputEnabled)
         {
+            Input.gyro.enabled = true;
             mPlayerScore.enabled = true;
             mPlayerScore.SetScoreEnabled(true);
         }
         else
         {
+            Input.gyro.enabled = false;
             mPlayerScore.SetScoreEnabled(false);
         }
     }
@@ -158,6 +202,9 @@ public class PlayerController : MonoBehaviour
                 LevelOverSpriteMover.enabled = true;
             }
         }
+
+        PlayerPrefs.SetInt(SettingsStrings.PlayerLives, mLives);
+        PlayerPrefs.Save();
 
         SetInputEnabled(false);
 
@@ -227,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShipHitEffects()
     {
-        while (DamageInvincibilityTimer > 0.0f)
+        while (!bCanTakeDamage && DamageInvincibilityTimer > 0.0f)
         {
             if (mPlayerShip)
             {

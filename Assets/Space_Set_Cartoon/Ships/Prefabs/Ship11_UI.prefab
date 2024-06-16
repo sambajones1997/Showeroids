@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 181534293019138924}
   - component: {fileID: 1609996363216768142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Trim_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490915002499319705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2553061321244436783}
   - component: {fileID: 1573208899962560463}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Damaged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728148725879616856}
   - component: {fileID: 3371368395875725816}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Thrust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657904832951604046}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5315906272214877792}
   - component: {fileID: 7501620092591043097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Windows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7730212625448091362}
   - component: {fileID: 4123837442958469059}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Trim_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1137270605250236605}
   - component: {fileID: 5814154929227293420}
   - component: {fileID: 5004677421990239502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship11_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1015438463677645558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3748740609893656803}
   - component: {fileID: 2929367253536373286}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship_11_H_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -79,12 +79,12 @@ public class GameSceneUI : MonoBehaviour
         }
     }
 
-    public void DisplayUI()
+    public void DisplayUI(bool bEnabled = true)
     {
-        m_ScoreObject.SetActive(true);
-        m_LifeObject.SetActive(true);
+        m_ScoreObject.SetActive(bEnabled);
+        m_LifeObject.SetActive(bEnabled);
 
-        if (m_PlayerController)
+        if (m_PlayerController && m_Life0Sprite == null)
         {
             m_Life0Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
             m_Life1Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();

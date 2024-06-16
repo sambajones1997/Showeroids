@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1948768189933303722}
   - component: {fileID: 2614504739257605169}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7610913944647114746}
   - component: {fileID: 5373931155749636283}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thrust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6764539059599372602}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 181534293019138924}
   - component: {fileID: 1609996363216768142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trim_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5315906272214877792}
   - component: {fileID: 7501620092591043097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7730212625448091362}
   - component: {fileID: 4123837442958469059}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trim_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8368888038817980927}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1137270605250236605}
   - component: {fileID: 5814154929227293420}
   - component: {fileID: 353357779856336513}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship9_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3748740609893656803}
   - component: {fileID: 2929367253536373286}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 886670487320672979}
   - component: {fileID: 457379638238372033}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hurt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7066668131908285630}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}

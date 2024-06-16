@@ -4,11 +4,21 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+public static class SettingsStrings
+{
+    public static string PlayerPrefsInputType = "PlayerInputType";
+    public static string PlayerLives = "PlayerLives";
+}
+
 public class SettingsMenuUI : MonoBehaviour
 {
     [SerializeField] AudioMixer mAudioMixer;
     [SerializeField] GameObject mSettingsMenu;
+    [SerializeField] GameObject mSettingsMenuCanvas;
     [SerializeField] GameObject mResetLeadboardPopup;
+
+    [Header("DropDown")]
+    [SerializeField] Dropdown mDropDown;
 
     [Header("Audio Sliders")]
     [SerializeField] Slider mMasterVolSlider;
@@ -36,8 +46,12 @@ public class SettingsMenuUI : MonoBehaviour
             mSFXVolSlider.value = AudioManager.GetRawSFXVol();
         }
 
-        // Audio Mixer Group Loading
+        if (mDropDown)
+        {
+            mDropDown.value = PlayerPrefs.GetInt(SettingsStrings.PlayerPrefsInputType, 0);
+        }
 
+        // Audio Mixer Group Loading
         if (mAudioMixer)
         {
             mAudioMixer.SetFloat(AudioManager.GetMasterVolName(), AudioManager.GetMasterVol());
@@ -67,17 +81,29 @@ public class SettingsMenuUI : MonoBehaviour
     public void OnCloseSettingsMenuPressed()
     {
         SaveUserSettings();
-        mSettingsMenu.SetActive(false);
+        mSettingsMenu.SetActive(true); // Ensure we're open for the next time
+        mSettingsMenuCanvas.SetActive(false);
+    }
+
+    public void OnSaveSettingsPressed()
+    {
+        SaveUserSettings();
     }
 
     public void OnResetLeaderboardPressed()
     {
         mResetLeadboardPopup.SetActive(true);
         mSettingsMenu.SetActive(false);
+        ShoweroidsFileSystem.ResetLeaderBoard();
     }
 
     private void SaveUserSettings()
     {
         AudioManager.SaveUserSettings();
+        if (mDropDown)
+        {
+            PlayerPrefs.SetInt(SettingsStrings.PlayerPrefsInputType, mDropDown.value);
+            PlayerPrefs.Save();
+        }
     }
 }
