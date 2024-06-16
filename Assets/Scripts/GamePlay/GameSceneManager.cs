@@ -125,9 +125,6 @@ public class GameSceneManager : MonoBehaviour
         GameData.GameLevelData.LevelIndex = 0;
         GameData.GameLevelData.DifficultyLevel = 0;
 
-        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, 0);
-        PlayerPrefs.Save();
-
         AdvanceToNextLevel();
     }
 
@@ -136,6 +133,7 @@ public class GameSceneManager : MonoBehaviour
         if (mPlayerController)
         {
             mPlayerController.LevelOver();
+            PlayerPrefs.SetInt(SettingsStrings.PlayerLives, mPlayerController.mMaxLives);
         }
 
         if (mGameSceneUI)
@@ -147,6 +145,9 @@ public class GameSceneManager : MonoBehaviour
         {
             mPlayerScore.SetScoreEnabled(false);
         }
+
+        PlayerPrefs.SetInt(PlayerScoreStatics.CurrentSessionScore, 0);
+        PlayerPrefs.Save();
 
         mGameState = EGameState.Dead; 
     }
