@@ -80,6 +80,7 @@ public class CustomiserUI : MonoBehaviour
 
         UpdateShipSpriteAndColours();
         UpdateCustomiserColours();
+        bShipMarkedDirty = true;
     }
 
     public void OnNextTrim1ColourPressed(bool increment = true)

@@ -25,9 +25,18 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] Slider mMusicVolSlider;
     [SerializeField] Slider mSFXVolSlider;
 
+    [Header("Saved")]
+    [SerializeField] TMPro.TextMeshProUGUI mSavedText;
+
+    public void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public void Start()
     {
         AudioManager.LoadUserSettings();
+        mSavedText.enabled = false;
 
         // Audio Slider's Prepping
 
@@ -88,6 +97,11 @@ public class SettingsMenuUI : MonoBehaviour
     public void OnSaveSettingsPressed()
     {
         SaveUserSettings();
+        if (mSavedText)
+        {
+            mSavedText.enabled = true;
+            StartCoroutine("TurnOffSavedText");
+        }
     }
 
     public void OnResetLeaderboardPressed()
@@ -105,5 +119,16 @@ public class SettingsMenuUI : MonoBehaviour
             PlayerPrefs.SetInt(SettingsStrings.PlayerPrefsInputType, mDropDown.value);
             PlayerPrefs.Save();
         }
+    }
+
+    IEnumerator TurnOffSavedText()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        if (mSavedText)
+        {
+            mSavedText.enabled = false;
+        }
+        yield break;
     }
 }
