@@ -22,8 +22,6 @@ public class GameSceneUI : MonoBehaviour
         if (m_PlayerController)
         {
             m_PlayerController.PlayerTakenHitEvent.AddListener(PlayerLivesChanged);
-
-            RefreshLives();
         }
     }
 
@@ -115,6 +113,8 @@ public class GameSceneUI : MonoBehaviour
             m_Life0Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
             m_Life1Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
             m_Life2Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
+
+            RefreshLives();
         }
     }
 }
