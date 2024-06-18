@@ -100,6 +100,7 @@ public class SettingsMenuUI : MonoBehaviour
         if (mSavedText)
         {
             mSavedText.enabled = true;
+            StopAllCoroutines(); // Ensure we don't have more than one coroutine going
             StartCoroutine("TurnOffSavedText");
         }
     }

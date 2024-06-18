@@ -22,6 +22,8 @@ public class GameSceneUI : MonoBehaviour
         if (m_PlayerController)
         {
             m_PlayerController.PlayerTakenHitEvent.AddListener(PlayerLivesChanged);
+
+            RefreshLives();
         }
     }
 
@@ -57,6 +59,30 @@ public class GameSceneUI : MonoBehaviour
         if (m_GameOverObject)
         {
             m_GameOverObject.SetActive(bDisplay);
+        }
+    }
+
+    void RefreshLives()
+    {
+        int lives = 3;
+        if (m_PlayerController)
+        {
+            lives = m_PlayerController.GetCurrentLives();
+        }    
+
+        if (m_Life0Sprite.sprite && lives < 1)
+        {
+            m_Life0Sprite.enabled = false;
+        }
+
+        if (m_Life1Sprite.sprite && lives < 2)
+        {
+            m_Life1Sprite.enabled = false;
+        }
+
+        if (m_Life2Sprite.sprite && lives < 3)
+        {
+            m_Life2Sprite.enabled = false;
         }
     }
 

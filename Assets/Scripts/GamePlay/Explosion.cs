@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    public enum EExplosionType { Explosion, Treasure };
+
+    [SerializeField] EExplosionType ExplosionType;
     AsteroidPoolingManager PoolingManager;
 
     public void OnParticleSystemStopped()
@@ -15,7 +18,14 @@ public class Explosion : MonoBehaviour
 
         if (PoolingManager)
         {
-            PoolingManager.ReleaseExplosionToPool(gameObject);
+            if (ExplosionType == EExplosionType.Explosion)
+            {
+                PoolingManager.ReleaseExplosionToPool(gameObject);
+            }
+            else
+            {
+                PoolingManager.ReleaseTreasureVFXToPool(gameObject);
+            }
         }
     }
 }

@@ -48,7 +48,6 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         PlayerController pc = collision.transform.root.GetComponentInChildren<PlayerController>();
@@ -65,7 +64,6 @@ public class Asteroid : MonoBehaviour
         }
         DestroyAsteroid();
     }
-
 
     private void DestroyAsteroid()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public static class PlayerScoreStatics
 {
@@ -16,12 +17,17 @@ public class PlayerScore : MonoBehaviour
 
     public int m_impactPenalty = -100;
     public int m_scorePerSecond = 20;
+    public int m_newLifeScore = 10000;
 
     public float m_timeSinceLastHit = 0.0f;
+
+    int LastNewLifeScore = 0;
 
     public bool bUpdateScore = false;
 
     public List<KeyValuePair<float, float>> m_MultiplierTimes = new List<KeyValuePair<float, float>>();
+
+    public UnityEvent NewLifeScore;
 
     private void Start()
     {
@@ -49,8 +55,14 @@ public class PlayerScore : MonoBehaviour
             return;
         }
 
-        m_Score += (m_scorePerSecond * (m_ScoreMultiplier + m_DifficultyMultiplier)) * Time.deltaTime;
-        m_CurrentScore = (int)(m_Score);
+        AddScore(m_scorePerSecond * Time.deltaTime);
+
+        if (m_CurrentScore - LastNewLifeScore >= m_newLifeScore)
+        {
+            NewLifeScore.Invoke();
+            // Round to nearest 1000
+            LastNewLifeScore = (m_CurrentScore / 1000) * 1000;
+        }
     }
 
     private void FixedUpdate()
@@ -101,5 +113,16 @@ public class PlayerScore : MonoBehaviour
             m_timeSinceLastHit = 0.0f;
         }
         yield return new WaitForSeconds(1.0f);
+    }
+
+    public float MultiplyScore(float score)
+    {
+        return score * (m_ScoreMultiplier + m_DifficultyMultiplier);
+    }
+
+    public void AddScore(float score)
+    {
+        m_Score += MultiplyScore(score);
+        m_CurrentScore = (int)(m_Score);
     }
 }

@@ -184,12 +184,19 @@ public class PlayerController : MonoBehaviour
             Input.gyro.enabled = true;
             mPlayerScore.enabled = true;
             mPlayerScore.SetScoreEnabled(true);
+            mPlayerScore.NewLifeScore.AddListener(AddNewLife);
         }
         else
         {
             Input.gyro.enabled = false;
             mPlayerScore.SetScoreEnabled(false);
+            mPlayerScore.NewLifeScore.RemoveListener(AddNewLife);
         }
+    }
+
+    protected void AddNewLife()
+    {
+        mLives = Mathf.Clamp(mLives + 1, 0, mMaxLives);
     }
 
     public void LevelOver()
