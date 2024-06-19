@@ -51,7 +51,6 @@ public class MainMenuUI : MonoBehaviour
         mMainMenuCanvas.SetActive(false);
     }
 
-
     public void ShowCanvas(bool showCanvas)
     {
         mMainMenuCanvas.SetActive(true);

@@ -8,6 +8,7 @@ public class Treasure : MonoBehaviour
     [SerializeField] GameObject AsteroidSprite;  
     Vector3 MovementVector = -Vector3.up;
     AsteroidPoolingManager Manager;
+    GameSceneAudio AudioInstance;
 
     [SerializeField] float CurrentSpeed = 1.0f;
     [SerializeField] public int ScoreToGive = 2500;
@@ -30,24 +31,30 @@ public class Treasure : MonoBehaviour
             ps.AddScore(ScoreToGive);
         }
 
-        if (FindManager() && Manager)
+        if (FindPoolingManager() && Manager)
         {
             GameObject vfx = Manager.GetPooledTreasureVFX();
             vfx.SetActive(true);
             vfx.transform.SetPositionAndRotation(transform.position, transform.rotation);
         }
+
+        if (FindAudioManager() && AudioInstance)
+        {
+            GameSceneAudio.GetGameSceneAudioInstance().PlayTreasureSFX();
+        }
+
         DestroyTreasure();
     }
 
     private void DestroyTreasure()
     {
-        if (FindManager() && Manager)
+        if (FindPoolingManager() && Manager)
         {
             Manager.ReleaseTreasureToPool(gameObject);
         }
     }
 
-    private bool FindManager()
+    private bool FindPoolingManager()
     {
         if (!Manager)
         {
@@ -55,5 +62,15 @@ public class Treasure : MonoBehaviour
         }
 
         return Manager != null;
+    }
+
+    private bool FindAudioManager()
+    {
+        if (!AudioInstance)
+        {
+            AudioInstance = GameSceneAudio.GetGameSceneAudioInstance();
+        }
+
+        return AudioInstance != null;
     }
 }

@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     [Header("Component References")]
     [SerializeField] PlayerScore mPlayerScore;
     [SerializeField] PlayerShip mPlayerShip;
-    [SerializeField] AudioSource mAudioSource;
 
     [Header("Unity Events")]
     [SerializeField] public UnityEvent PlayerDiedEvent;
@@ -229,11 +228,6 @@ public class PlayerController : MonoBehaviour
         DamageInvincibilityTimer = DamageInvincibility;
         bCanTakeDamage = false;
 
-        if (mAudioSource)
-        {
-            mAudioSource.Play();
-        }
-
         if (mLives <= 0)
         {
             PlayerDiedEvent.Invoke();
@@ -242,11 +236,19 @@ public class PlayerController : MonoBehaviour
             if (mExplosionVFX)
             {
                 Instantiate(mExplosionVFX, transform);
+                if (GameSceneAudio.GetGameSceneAudioInstance())
+                {
+                    GameSceneAudio.GetGameSceneAudioInstance().PlayExplosionSFX();
+                }
             }
         }
         else
         {
             StartCoroutine("ShipHitEffects");
+            if (GameSceneAudio.GetGameSceneAudioInstance())
+            {
+                GameSceneAudio.GetGameSceneAudioInstance().PlayImpactSFX();
+            }
         }
 
         PlayerTakenHitEvent.Invoke();

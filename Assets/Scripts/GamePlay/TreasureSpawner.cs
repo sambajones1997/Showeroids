@@ -49,7 +49,7 @@ public class TreasureSpawner : MonoBehaviour
 
             for (int i = 0; i < NumTreasuresToSpawn; i++)
             {
-                SpawnTimers.Add(Random.Range(0, maxTimer));
+                SpawnTimers.Add(Random.Range(OffsetTimer * 2.0f, maxTimer));
             }
 
             GetNextSpawnTimer();
@@ -80,6 +80,8 @@ public class TreasureSpawner : MonoBehaviour
                 TreasureObject.SetActive(true);
             }
         }
+
+        GetNextSpawnTimer();
     }
 
     private void GetNextSpawnTimer()

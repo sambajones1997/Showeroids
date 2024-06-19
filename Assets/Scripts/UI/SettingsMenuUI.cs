@@ -112,8 +112,19 @@ public class SettingsMenuUI : MonoBehaviour
         ShoweroidsFileSystem.ResetLeaderBoard();
     }
 
+    public void OnInputTypeChanged()
+    {
+        if (mDropDown)
+        {
+            PlayerPrefs.SetInt(SettingsStrings.PlayerPrefsInputType, mDropDown.value);
+        }
+    }
+
     private void SaveUserSettings()
     {
+        OnMusicVolumeSoundChanged();
+        OnSFXVolumeSoundChanged();
+        OnMasterVolumeSoundChanged();
         AudioManager.SaveUserSettings();
         if (mDropDown)
         {
