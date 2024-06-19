@@ -142,6 +142,16 @@ public class PlayerShip : MonoBehaviour
         EnableAllSprites(false);
     }
 
+    public void EnableCollision(bool bEnabled)
+    {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = bEnabled;
+        }
+    }
+
     public void EnableRendering()
     {
         EnableAllSprites(true);

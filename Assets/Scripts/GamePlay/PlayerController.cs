@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [Header("Unity Events")]
     [SerializeField] public UnityEvent PlayerDiedEvent;
     [SerializeField] public UnityEvent PlayerTakenHitEvent;
+    [SerializeField] public UnityEvent PlayerGainedNewLife;
 
     private void Start()
     {
@@ -184,6 +185,7 @@ public class PlayerController : MonoBehaviour
     protected void AddNewLife()
     {
         mLives = Mathf.Clamp(mLives + 1, 0, mMaxLives);
+        PlayerGainedNewLife.Invoke();
     }
 
     public void LevelOver()
@@ -228,11 +230,18 @@ public class PlayerController : MonoBehaviour
         DamageInvincibilityTimer = DamageInvincibility;
         bCanTakeDamage = false;
 
+        if (mPlayerScore)
+        {
+            mPlayerScore.ShipHit();
+        }
+
         if (mLives <= 0)
         {
             PlayerDiedEvent.Invoke();
             DamageInvincibility = float.MaxValue;
+            mPlayerShip.EnableCollision(false);
             mPlayerShip.DisableRendering(); // Set invisible
+
             if (mExplosionVFX)
             {
                 Instantiate(mExplosionVFX, transform);

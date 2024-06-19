@@ -6,6 +6,8 @@ using UnityEngine.Audio;
 public class AudioSessionManager : MonoBehaviour
 {
     [SerializeField] AudioMixer mAudioMixer;
+
+    [SerializeField] AudioSource mAudioToEnablePostLoad;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,11 @@ public class AudioSessionManager : MonoBehaviour
             mAudioMixer.SetFloat(AudioManager.GetMasterVolName(), AudioManager.GetMasterVol());
             mAudioMixer.SetFloat(AudioManager.GetMusicVolName(), AudioManager.GetMusicVol());
             mAudioMixer.SetFloat(AudioManager.GetSFXVolName(), AudioManager.GetSFXVol());
+        }
+
+        if (mAudioToEnablePostLoad)
+        {
+            mAudioToEnablePostLoad.Play();
         }
     }
 }

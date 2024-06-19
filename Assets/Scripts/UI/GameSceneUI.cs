@@ -22,6 +22,7 @@ public class GameSceneUI : MonoBehaviour
         if (m_PlayerController)
         {
             m_PlayerController.PlayerTakenHitEvent.AddListener(PlayerLivesChanged);
+            m_PlayerController.PlayerGainedNewLife.AddListener(PlayerLivesChanged);
             RefreshLives();
         }
     }
@@ -101,12 +102,23 @@ public class GameSceneUI : MonoBehaviour
             {
                 case 0:
                     m_Life0Sprite.enabled = false;
+                    m_Life1Sprite.enabled = false;
+                    m_Life2Sprite.enabled = false;
                     break;
                 case 1:
+                    m_Life1Sprite.enabled = true;
+                    m_Life1Sprite.enabled = false;
                     m_Life1Sprite.enabled = false;
                     break;
                 case 2:
+                    m_Life2Sprite.enabled = true;
+                    m_Life2Sprite.enabled = true;
                     m_Life2Sprite.enabled = false;
+                    break;
+                case 3:
+                    m_Life2Sprite.enabled = true;
+                    m_Life2Sprite.enabled = true;
+                    m_Life2Sprite.enabled = true;
                     break;
             }
         }
