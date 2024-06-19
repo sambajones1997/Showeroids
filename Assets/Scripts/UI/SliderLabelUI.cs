@@ -24,6 +24,13 @@ public class SliderLabelUI : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (mSlider)
+        {
+            mSlider.onValueChanged.RemoveListener(delegate { OnSliderValueChanged(); });
+        }
+    }
 
     public void OnSliderValueChanged()
     {

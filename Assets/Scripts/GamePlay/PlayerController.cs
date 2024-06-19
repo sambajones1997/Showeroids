@@ -81,18 +81,6 @@ public class PlayerController : MonoBehaviour
         if (!bCanTakeDamage && mLives > 0 && DamageInvincibilityTimer > 0.0f)
         {
             DamageInvincibilityTimer -= Time.fixedDeltaTime;
-
-            if (DamageInvincibilityTimer < 0.0f)
-            {
-                StopCoroutine("ShipHitEffects");
-                bCanTakeDamage = true;
-
-                if (mPlayerShip)
-                {
-                    mPlayerShip.EnableAllSprites(!mPlayerShip.GetShipBodySprite().enabled, false);
-                    mPlayerShip.EnableDamageSprite(false);
-                }
-            }
         }
     }
 
@@ -279,16 +267,32 @@ public class PlayerController : MonoBehaviour
         mPlayerShip = ship;
     }
 
+    private void InflictDamageSprite(bool bShowDamage)
+    {
+        if (mPlayerShip)
+        {
+            mPlayerShip.EnableDamageSprite(bShowDamage);
+            mPlayerShip.EnableAllSprites(bShowDamage, bShowDamage);
+        }
+    }
+
     IEnumerator ShipHitEffects()
     {
-        while (!bCanTakeDamage && DamageInvincibilityTimer > 0.0f)
+        InflictDamageSprite(true);
+        yield return new WaitForSeconds(0.1f);
+        InflictDamageSprite(false);
+        yield return new WaitForSeconds(0.1f);
+        InflictDamageSprite(true);
+        yield return new WaitForSeconds(0.1f);
+        InflictDamageSprite(false);
+        yield return new WaitForSeconds(0.1f);
+        InflictDamageSprite(true);
+        yield return new WaitForSeconds(0.1f);
+        if (mPlayerShip)
         {
-            if (mPlayerShip)
-            {
-                mPlayerShip.EnableDamageSprite(true);
-                mPlayerShip.EnableAllSprites(!mPlayerShip.GetShipBodySprite().enabled, true);
-            }
-            yield return new WaitForSeconds(0.1f);
-        }      
+            bCanTakeDamage = true;
+            mPlayerShip.EnableAllSprites(true, false);
+        }
+        yield break;
     }
 }

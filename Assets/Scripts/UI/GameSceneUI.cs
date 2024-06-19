@@ -22,6 +22,15 @@ public class GameSceneUI : MonoBehaviour
         if (m_PlayerController)
         {
             m_PlayerController.PlayerTakenHitEvent.AddListener(PlayerLivesChanged);
+            RefreshLives();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (m_PlayerController)
+        {
+            m_PlayerController.PlayerTakenHitEvent.RemoveListener(PlayerLivesChanged);
         }
     }
 
@@ -107,14 +116,13 @@ public class GameSceneUI : MonoBehaviour
     {
         m_ScoreObject.SetActive(bEnabled);
         m_LifeObject.SetActive(bEnabled);
+        RefreshLives();
 
         if (m_PlayerController && m_Life0Sprite == null)
         {
             m_Life0Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
             m_Life1Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
             m_Life2Sprite.sprite = m_PlayerController.GetPlayerShip().GetShipLifeSprite();
-
-            RefreshLives();
         }
     }
 }

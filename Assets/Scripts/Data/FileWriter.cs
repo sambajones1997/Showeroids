@@ -11,6 +11,27 @@ public static class ShoweroidsFileSystem
     static string LeaderBoardLocation = "/Leaderboard.txt";
     static string PlayerSettingsLocation = "/Settings.txt";
 
+    public static void CreateDirectory()
+    {
+        string path = Application.persistentDataPath + DirectoryPath;
+
+        //Write some text to the test.txt file
+        if (!File.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+    }
+
+    public static void CreateFiles(string path)
+    {
+        if (!File.Exists(path))
+        {
+            StreamWriter writer = File.CreateText(path);
+            writer.WriteLine("");
+            writer.Close();     
+        }
+    }
+
     public static void WriteShipDataFile(PlayerData shipPlayerData)
     {
         string path = Application.persistentDataPath + DirectoryPath;
@@ -34,7 +55,7 @@ public static class ShoweroidsFileSystem
     public static PlayerData ReadShipDataFile()
     {
         string path = Application.persistentDataPath + DirectoryPath + ShipDataLocation;
-        PlayerData playerData = new PlayerData();
+        PlayerData playerData = new PlayerData(3,3,0,7);
         //Write some text to the test.txt file
 
         if (File.Exists(path))
@@ -64,13 +85,10 @@ public static class ShoweroidsFileSystem
 
     public static void WriteLeaderBoard(ref List<SLeaderBoardUserData> leaderBoardUserData)
     {
-        string path = Application.persistentDataPath + DirectoryPath;
+        CreateDirectory();
 
-        //Write some text to the test.txt file
-        if (!File.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
+        string path = Application.persistentDataPath + DirectoryPath;
+        CreateFiles(path + LeaderBoardLocation);
 
         int maxLeaderboardEntries = 10;
 
@@ -96,6 +114,8 @@ public static class ShoweroidsFileSystem
         List<SLeaderBoardUserData> dataList = new List<SLeaderBoardUserData>();
 
         string path = Application.persistentDataPath + DirectoryPath + LeaderBoardLocation;
+        CreateDirectory();
+        CreateFiles(path);
 
         //Write some text to the test.txt file
         if (File.Exists(path))
@@ -117,10 +137,6 @@ public static class ShoweroidsFileSystem
                     dataList.Add(new SLeaderBoardUserData(leaderBoardName, leaderBoardScore));
                 }
             }
-        }
-        else
-        {
-            File.CreateText(path);
         }
 
         leaderBoardUserData = dataList;
@@ -161,44 +177,4 @@ public static class ShoweroidsFileSystem
 
         return leaderBoard;
     }
-
-    public static void WritePlayerSettings()
-    {
-
-    }
-
-    public static void ReadPlayerSettings()
-    {
-        List<SLeaderBoardUserData> dataList = new List<SLeaderBoardUserData>();
-
-        string path = Application.persistentDataPath + DirectoryPath + PlayerSettingsLocation;
-
-        //Write some text to the test.txt file
-        if (File.Exists(path))
-        {
-            FileStream fileStream = File.OpenRead(path);
-            string[] settings = File.ReadAllLines(path);
-            fileStream.Close();
-
-            foreach (string entry in settings)
-            {
-                string[] leaderBoardDataString = entry.Split(new char[] { ',' });
-
-                if (leaderBoardDataString.Length == 2)
-                {
-                    int leaderBoardScore = 0;
-                    int.TryParse(leaderBoardDataString[1], out leaderBoardScore);
-                    string leaderBoardName = leaderBoardDataString[0];
-
-                    dataList.Add(new SLeaderBoardUserData(leaderBoardName, leaderBoardScore));
-                }
-            }
-        }
-        else
-        {
-            File.CreateText(path);
-        }
-    }
-
-
 }

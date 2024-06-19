@@ -69,6 +69,15 @@ public class GameSceneManager : MonoBehaviour
 
     void OutroOver()
     {
+        if (mPlayerController)
+        {
+            SimpleSpriteMover PlayerEndMover = mPlayerController.gameObject.GetComponentInChildren<SimpleSpriteMover>();
+            if (PlayerEndMover)
+            {
+                PlayerEndMover.SpriteMovementCompleted.RemoveListener(OutroOver);
+            }
+        }
+
         EndGame();
     }
 
@@ -109,6 +118,11 @@ public class GameSceneManager : MonoBehaviour
 
     public void AdvanceToNextLevel()
     {
+        if (mPlayerController)
+        {
+            mPlayerController.PlayerDiedEvent.RemoveListener(OnPlayerDied);
+        }
+
         AsyncOperation SceneLoader = SceneManager.LoadSceneAsync(1);
         SceneLoader.allowSceneActivation = true;
     }
@@ -160,5 +174,10 @@ public class GameSceneManager : MonoBehaviour
     private void OnPlayerDied()
     {
         GameOver();
+
+        if (mPlayerController)
+        {
+            mPlayerController.PlayerDiedEvent.RemoveListener(OnPlayerDied);
+        }
     }
 }

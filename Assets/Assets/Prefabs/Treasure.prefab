@@ -182,4 +182,4 @@ MonoBehaviour:
   RigidBody: {fileID: 8370520299255152510}
   AsteroidSprite: {fileID: 3183279578596616797}
   CurrentSpeed: 1
-  ScoreToGive: 2500
+  ScoreToGive: 1000
