@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public UnityEvent PlayerDiedEvent;
     [SerializeField] public UnityEvent PlayerTakenHitEvent;
     [SerializeField] public UnityEvent PlayerGainedNewLife;
+    [SerializeField] public UnityEvent PlayerQuitsLevel;
 
     private void Start()
     {
@@ -138,6 +139,11 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR_WIN
         horizontalInput = Input.GetAxisRaw("Horizontal");
 #endif //UNITY_ANDROID
+
+        if (Input.GetAxisRaw("Cancel") > 0.0f)
+        {
+            PlayerQuitsLevel.Invoke();
+        }
     }
 
     void ApplyAcceleration(float axis)

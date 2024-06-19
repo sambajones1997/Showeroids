@@ -13,17 +13,22 @@ public static class AudioManager
     static float MusicVol = 1.0f;
     static float SFXVol = 1.0f;
 
+    public static float InvSmoothStep(float val)
+    {
+        return Mathf.Clamp(0.5f - Mathf.Sin(Mathf.Asin(1.0f - 2.0f * val) / 3.0f), 0.0f, 1.0f);
+    }
+
     public static float GetVolAtPercentage(float percentage)
     {
-        return Mathf.Lerp(MinVoldb, MaxVoldb, percentage);
+        return Mathf.Lerp(MinVoldb, MaxVoldb, InvSmoothStep(percentage));
     }
 
     public static void LoadUserSettings()
     {
         // Master Vol Saving
         MasterVol = PlayerPrefs.GetFloat(MasterVolName, 100.0f);
-        MusicVol = PlayerPrefs.GetFloat(MusicVolName, 50.0f);
-        SFXVol = PlayerPrefs.GetFloat(SFXVolName, 50.0f);
+        MusicVol = PlayerPrefs.GetFloat(MusicVolName, 60.0f);
+        SFXVol = PlayerPrefs.GetFloat(SFXVolName, 85.0f);
     }
 
     public static void SaveUserSettings()

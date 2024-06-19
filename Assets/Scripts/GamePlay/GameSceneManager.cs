@@ -30,7 +30,12 @@ public class GameSceneManager : MonoBehaviour
 
     private void Start()
     {
-        mPlayerController.PlayerDiedEvent.AddListener(OnPlayerDied);
+        if (mPlayerController)
+        {
+            mPlayerController.PlayerQuitsLevel.AddListener(ReturnToMainMenu);
+            mPlayerController.PlayerDiedEvent.AddListener(OnPlayerDied);
+        }
+ 
     }
 
     private void FixedUpdate()
@@ -121,6 +126,7 @@ public class GameSceneManager : MonoBehaviour
         if (mPlayerController)
         {
             mPlayerController.PlayerDiedEvent.RemoveListener(OnPlayerDied);
+            mPlayerController.PlayerQuitsLevel.RemoveListener(ReturnToMainMenu);
         }
 
         AsyncOperation SceneLoader = SceneManager.LoadSceneAsync(1);
@@ -178,6 +184,7 @@ public class GameSceneManager : MonoBehaviour
         if (mPlayerController)
         {
             mPlayerController.PlayerDiedEvent.RemoveListener(OnPlayerDied);
+            mPlayerController.PlayerQuitsLevel.RemoveListener(ReturnToMainMenu);
         }
     }
 }
