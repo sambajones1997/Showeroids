@@ -11,10 +11,10 @@ public struct DifficultyBasedSpeed
 
 public class Asteroid : MonoBehaviour
 {
-    [SerializeField] Rigidbody RigidBody;
+    [SerializeField] Rigidbody2D RigidBody;
     [SerializeField] GameObject AsteroidSprite;
 
-    [SerializeField] Vector3 MovementVector = Vector3.zero;
+    [SerializeField] Vector2 MovementVector = Vector2.zero;
     [Header("Speed")]
     [SerializeField] List<DifficultyBasedSpeed> DifficultyBasedSpeeds = new List<DifficultyBasedSpeed>();
     [Header("Rotation")]
@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerController pc = collision.transform.root.GetComponentInChildren<PlayerController>();
         if (pc)

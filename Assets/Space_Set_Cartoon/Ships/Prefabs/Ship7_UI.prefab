@@ -578,7 +578,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1137270605250236605}
   - component: {fileID: 5814154929227293420}
-  - component: {fileID: 6133809412657583605}
+  - component: {fileID: 1319994362092775674}
+  - component: {fileID: 1704895757683740067}
   m_Layer: 8
   m_Name: Ship7_UI
   m_TagString: Untagged
@@ -632,29 +633,121 @@ MonoBehaviour:
   mTrim2ColourLocation: {fileID: 1331066888426791844}
   ThrustMinScale: 0.75
   ThrustMaxScale: 1
---- !u!136 &6133809412657583605
-CapsuleCollider:
+--- !u!60 &1319994362092775674
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6134467170885088951}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 119
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.25
-  m_Height: 8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.36, y: 7.92}
+    newSize: {x: 3.2, y: 6.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.9935555, y: 1.5753008}
+      - {x: -1.099087, y: 0.9444997}
+      - {x: -1.1114218, y: 0.2823589}
+      - {x: -1.0937364, y: -0.41425017}
+      - {x: -1.0421505, y: -0.80850613}
+      - {x: -0.83932215, y: -1.8019763}
+      - {x: -0.8660822, y: -1.8772738}
+      - {x: -1.0905701, y: -1.9659723}
+      - {x: -1.4210408, y: -2.2609088}
+      - {x: -1.6355002, y: -2.6736457}
+      - {x: -1.6524049, y: -3.0446663}
+      - {x: -1.6074193, y: -3.4125268}
+      - {x: -1.4366069, y: -3.747249}
+      - {x: -1.3282845, y: -3.246949}
+      - {x: -1.2460985, y: -2.9923992}
+      - {x: -1.1014168, y: -2.7675421}
+      - {x: -0.85986555, y: -2.4862378}
+      - {x: -0.6399244, y: -2.3742166}
+      - {x: -0.09619677, y: -2.5043814}
+      - {x: -0.059085183, y: -3.3134036}
+      - {x: 0.059220552, y: -3.946101}
+      - {x: 0.20309381, y: -3.342926}
+      - {x: 0.26011145, y: -2.5141697}
+      - {x: 0.31333125, y: -2.4980986}
+      - {x: 0.79857844, y: -2.3763087}
+      - {x: 0.9944407, y: -2.5393178}
+      - {x: 1.1987456, y: -2.83596}
+      - {x: 1.3285642, y: -3.2326024}
+      - {x: 1.4146862, y: -3.733767}
+      - {x: 1.6383903, y: -3.2413054}
+      - {x: 1.6668509, y: -2.8424053}
+      - {x: 1.5791788, y: -2.4236712}
+      - {x: 1.3433057, y: -2.082821}
+      - {x: 1.0650061, y: -1.8805332}
+      - {x: 1.0208292, y: -1.7684498}
+      - {x: 1.2205547, y: -0.07838595}
+      - {x: 1.2033693, y: 0.7663666}
+      - {x: 1.0997365, y: 1.4848821}
+      - {x: 0.847126, y: 2.5865521}
+      - {x: 0.49029604, y: 3.379032}
+      - {x: 0.03859745, y: 3.924778}
+      - {x: -0.33844972, y: 3.3454156}
+      - {x: -0.7196959, y: 2.5998318}
+  m_UseDelaunayMesh: 0
+--- !u!50 &1704895757683740067
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134467170885088951}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &8109289055504214687
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Treasure : MonoBehaviour
 {
-    [SerializeField] Rigidbody RigidBody;
+    [SerializeField] Rigidbody2D RigidBody;
     [SerializeField] GameObject AsteroidSprite;  
-    Vector3 MovementVector = -Vector3.up;
+    Vector2 MovementVector = -Vector2.up;
     AsteroidPoolingManager Manager;
     GameSceneAudio AudioInstance;
 
@@ -23,7 +23,7 @@ public class Treasure : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerScore ps = collision.transform.root.GetComponentInChildren<PlayerScore>();
         if (ps)

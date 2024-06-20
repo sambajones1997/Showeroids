@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minX: -0.1
-  maxX: 0.4
+  maxX: 0.2
 --- !u!1 &197396174
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,8 +885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.4
-  maxX: 0.4
+  minX: -0.3
+  maxX: 0.3
 --- !u!1 &235248678
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,8 +931,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.4
-  maxX: 0.4
+  minX: -0.3
+  maxX: 0.3
 --- !u!1 &314843863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1160,7 @@ GameObject:
   - component: {fileID: 427301731}
   - component: {fileID: 427301732}
   m_Layer: 0
-  m_Name: Easy
+  m_Name: Hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.35
+  minX: -0.25
   maxX: 0.25
 --- !u!1 &513638154
 GameObject:
@@ -1534,8 +1534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.4
-  maxX: 0.4
+  minX: -0.3
+  maxX: 0.3
 --- !u!1 &567105781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.5
+  minX: -0.25
   maxX: 0.1
 --- !u!1001 &593829430
 PrefabInstance:
@@ -2350,8 +2350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.5
-  maxX: 0.5
+  minX: -0.25
+  maxX: 0.25
 --- !u!1 &634543567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,9 +2610,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 427301731}
-  - {fileID: 1613992120}
   - {fileID: 1002183844}
+  - {fileID: 1613992120}
+  - {fileID: 427301731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &708976273
@@ -2628,11 +2628,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AsteroidSpawnerLocations:
-  - SpawnerObject: {fileID: 427301730}
+  - SpawnerObject: {fileID: 1002183843}
     MinDifficultyLevel: 0
   - SpawnerObject: {fileID: 1613992119}
     MinDifficultyLevel: 2
-  - SpawnerObject: {fileID: 1002183843}
+  - SpawnerObject: {fileID: 427301730}
     MinDifficultyLevel: 3
 --- !u!1 &756316701
 GameObject:
@@ -3202,7 +3202,7 @@ GameObject:
   - component: {fileID: 1002183844}
   - component: {fileID: 1002183845}
   m_Layer: 0
-  m_Name: Hard
+  m_Name: Easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3581,7 +3581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.5
+  minX: -0.25
   maxX: 0.1
 --- !u!1001 &1121963735
 PrefabInstance:
@@ -3839,7 +3839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minX: -0.1
-  maxX: 0.5
+  maxX: 0.25
 --- !u!1 &1179903411
 GameObject:
   m_ObjectHideFlags: 0
@@ -4655,8 +4655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.4
-  maxX: 0.4
+  minX: -0.3
+  maxX: 0.3
 --- !u!224 &1482618888 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9179827287193247353, guid: ef543c20bd5bd364a9873f5c2093fa85, type: 3}
@@ -4766,8 +4766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.35
-  maxX: 0.4
+  minX: -0.25
+  maxX: 0.25
 --- !u!1 &1569336195
 GameObject:
   m_ObjectHideFlags: 0
@@ -5465,6 +5465,9 @@ MonoBehaviour:
   PlayerGainedNewLife:
     m_PersistentCalls:
       m_Calls: []
+  PlayerQuitsLevel:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1724043918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5724,7 +5727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655702f44d299e488e4ca455c9810a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -0.4
+  minX: -0.2
   maxX: 0.1
 --- !u!1 &1786283718
 GameObject:
